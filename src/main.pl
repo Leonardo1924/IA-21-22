@@ -29,8 +29,11 @@ main :-
 
 %Funcionalidades
 action_for(1) :-
-    function1(L),
-    write(L), nl.
+    function1(Max,IdNomes),
+    write('Estafeta: '),
+    write(IdNomes),nl,
+    write('Número de Vezes:')
+    write(Max),nl.
 
 action_for(2) :-
     function2(L),
@@ -65,7 +68,7 @@ action_for(9) :-
     write('Estafeta: '),
     write(IdNomes),nl,
     write('Nº de vezes: '),
-write(Max),nl.
+    write(Max),nl.
 
 action_for(10) :-
     function10(L),

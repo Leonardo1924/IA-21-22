@@ -1,5 +1,5 @@
 :- consult('predicadosAuxiliares.pl').
-:- consult('baseDeConhecimento.pl').
+:- consult('BaseDeConhecimento.pl').
 :- consult('invariantes.pl').
 
 %Funcionalidades
