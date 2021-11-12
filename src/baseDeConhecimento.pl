@@ -12,14 +12,14 @@
 
 %--------------Clientes--------------
 %cliente(idºde cliente, nome, nif,rua,porta,freguesia,lista de encomendas realizadas,lista de encomendas atuais, telemovel)
-cliente(1,'Jose'    ,123469696,'Rua dos Rios','2','svitor',,         ,969798321).
-cliente(2,'Rafael'  ,123456789,'Rua dos Sinos','5','svicente',,      ,966969698).
-cliente(3,'Maria'   ,987654321,'Rua das Teclas','8','celeiros',,     ,969798231).
-cliente(4,'Rui'     ,123789400,'Rua da Universidade','12','gualtar',,,929395961).
-cliente(5,'Ana'     ,134567890,'Rua dos Mato','7','nogueira',,       ,912442421).
-cliente(6,'Pedro'   ,023462327,'Rua do Exercicito','2','svitor',,   ,961123501).
-cliente(7,'Henrique',123469696,'Avenida do Carmo','2','gualtar',,    ,934338321).
-cliente(8,'Leo'     ,255225571,'Avenida da Trindade','2','svitor',,  ,969215121).
+cliente(1,'Jose Andrade'      ,123469696,'Rua dos Rios','2','svitor',,         ,969798321).
+cliente(2,'Rafael Pereira'    ,123456789,'Rua dos Sinos','5','svicente',,      ,966969698).
+cliente(3,'Maria Silva'       ,987654321,'Rua das Teclas','8','celeiros',,     ,969798231).
+cliente(4,'Rui Lopes'         ,123789400,'Rua da Universidade','12','gualtar',,,929395961).
+cliente(5,'Ana Ferreira'      ,134567890,'Rua do Mato','7','nogueira',,        ,912442421).
+cliente(6,'Pedro Teixeira'    ,023462327,'Rua do Exercicito','2','svitor',,   ,961123501).
+cliente(7,'Henrique Oliveira' ,123469696,'Avenida do Carmo','2','gualtar',,    ,934338321).
+cliente(8,'Leonardo Henriques',255225571,'Avenida da Trindade','2','svitor',,  ,969215121).
 
 
 %---------Encomedas---------------
@@ -37,8 +37,13 @@ encomenda(10,100,)
 
 %--------Estafeta-------------------
 %estafeta(idºde estafeta,nome,contacto,historico,avaliação,proxima encomenda)
-
-
+estafeta (1, 'Abílio Pereira', 968574572)
+estafeta (2, 'Maria Costa'   , 925876447)
+estafeta (3, 'Sandra Silva'  , 957857458)
+estafeta (4, 'Pedro Rocha'   , 923454374)
+estafeta (5, 'Madalena Dias' , 934543456)
+estafeta (6, 'Paulo Marques' , 923432312)
+estafeta (7, 'António Soares', 964332124)
 
 
 
