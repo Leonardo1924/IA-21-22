@@ -3,108 +3,44 @@
 :-set_prolog_flag(answer_write_options,[max_depth(0)]).
 
 :-dynamic (cliente/7).
-:-dynamic (estafeta/).
-:-dynamic (encomenda/11).
-:-dynamic (veiculos/3).
+:-dynamic (estafeta/4).
+:-dynamic (encomenda/5).
+
 
 
 %Base DO Conhecimento
 
 %--------------Clientes--------------
-%cliente(idºde cliente, nome, nif,rua,porta,freguesia,lista de encomendas realizadas,lista de encomendas atuais, telemovel)
-cliente(1,'Jose Andrade'      ,123469696,'Rua dos Rios','2','svitor',,         ,969798321).
-cliente(2,'Rafael Pereira'    ,123456789,'Rua dos Sinos','5','svicente',,      ,966969698).
-cliente(3,'Maria Silva'       ,987654321,'Rua das Teclas','8','celeiros',,     ,969798231).
-cliente(4,'Rui Lopes'         ,123789400,'Rua da Universidade','12','gualtar',,,929395961).
-cliente(5,'Ana Ferreira'      ,134567890,'Rua do Mato','7','nogueira',,        ,912442421).
-cliente(6,'Pedro Teixeira'    ,023462327,'Rua do Exercicito','2','svitor',,   ,961123501).
-cliente(7,'Henrique Oliveira' ,123469696,'Avenida do Carmo','2','gualtar',,    ,934338321).
-cliente(8,'Leonardo Henriques',255225571,'Avenida da Trindade','2','svitor',,  ,969215121).
+%cliente(idºde cliente, nome, nif,rua,porta,freguesia, telemovel)
+cliente(1,'Jose Andrade'      ,123469696,'Rua dos Rios','2','svitor',969798321).
+cliente(2,'Rafael Pereira'    ,123456789,'Rua dos Sinos','5','svicente',966969698).
+cliente(3,'Maria Silva'       ,987654321,'Rua das Teclas','8','celeiros',969798231).
+cliente(4,'Rui Lopes'         ,123789400,'Rua da Universidade','12','gualtar',929395961).
+cliente(5,'Ana Ferreira'      ,134567890,'Rua do Mato','7','nogueira',912442421).
+cliente(6,'Pedro Teixeira'    ,023462327,'Rua do Exercicito','2','svitor',961123501).
+cliente(7,'Henrique Oliveira' ,123469696,'Avenida do Carmo','2','gualtar',934338321).
+cliente(8,'Leonardo Henriques',255225571,'Avenida da Trindade','2','svitor',969215121).
 
 
 %---------Encomedas---------------
-%encomenda(id,peso,volume,prazo,idºestafeta,idºcliente,de,para,preço,veiculo,entrega)
-encomenda(1,5,)
-encomenda(2,15,)
-encomenda(3,10,)
-encomenda(4,20,)
-encomenda(5,30,)
-encomenda(6,24,)
-encomenda(7,55,)
-encomenda(8,40,)
-encomenda(9,30,)
-encomenda(10,100,)
+%encomenda(id,peso,volume,prazo, idCliente) prazo: 0- imediato, 24-1 dia
+encomenda(1,5,20,0,2).
+encomenda(2,15,10,2,7).
+encomenda(3,10,23,6,8).
+encomenda(4,20,30,24,1).
+encomenda(5,30,45,0,2).
+encomenda(6,24,43,2,4).
+encomenda(7,55,23,6,3).
+encomenda(8,40,24,6,6).
+encomenda(9,30,13,24,5).
+encomenda(10,100,122,24,3).
 
 %--------Estafeta-------------------
-%estafeta(idºde estafeta,nome,contacto,historico,avaliação,proxima encomenda)
-estafeta (1, 'Abílio Pereira', 968574572)
-estafeta (2, 'Maria Costa'   , 925876447)
-estafeta (3, 'Sandra Silva'  , 957857458)
-estafeta (4, 'Pedro Rocha'   , 923454374)
-estafeta (5, 'Madalena Dias' , 934543456)
-estafeta (6, 'Paulo Marques' , 923432312)
-estafeta (7, 'António Soares', 964332124)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%----------------Mapa----------------
-
-
-freguesia( grafo([svitor , maximinos , svicente, nogueira, real, ferreiros, lomar, merlim, gualtar],
-  [aresta(svitor, svicente, 871),
-   aresta(svitor, gualtar, 477),
-   aresta(svitor, nogueira, 1583),
-   aresta(maximinos, ferreiros, 2365),
-   aresta(maximinos, real, 2493),
-   aresta(maximinos, svicente, 2654),
-   aresta(maximinos, lomar, 480),
-   aresta(svicente, real, 922),
-   aresta(svicente, nogueira, 2953),
-   aresta(nogueira, lomar, 2304),
-   aresta(real, merlim, 337),
-   aresta(real, ferreiros, 728),
-   aresta(viseu, coimbra, 388),
-   aresta(viseu,guarda, 2613),] 
-)).
-
-% random number genarator fez ser mais facil ir por duas ruas em vez de ir pela principal por isso temos que ter cuidado com isso (rios->trindade->camoes)
-ruaSvitor( grafo([rua_dos_rios, rua_do_exercicito, avenida_da_trindade, rua_do_taxa, rua_de_camoes],
-  [aresta(rua_dos_rios, rua_do_exercicito, 282),
-   aresta(rua_dos_rios, avenida_da_trindade, 232),
-   aresta(rua_dos_rios, rua_do_taxa, 150),
-   aresta(rua_dos_rios, rua_de_camoes, 415),
-   aresta(avenida_da_trindade, rua_de_camoes, 50),
-   aresta(rua_do_taxa, rua_do_exercicito, 139),
-   aresta(rua_de_camoes,rua_do_taxa, 39),]
-)).
-
-ruaMaximinos( grafo([rua_de_caires, avenida_spedro, rua_padre_cruz, avenida_domHenrique, largo_do_beco, travessa_das_laranjeiras],
-  [aresta(rua_de_caires, avenida_spedro, 690),
-   aresta(rua_de_caires, avenida_domHenrique, 420),
-   aresta(avenida_spedro, rua_padre_cruz, 140),
-   aresta(avenida_spedro, avenida_domHenrique, 120),
-   aresta(avenida_domHenrique, largo_do_beco, 134),
-   aresta(largo_do_beco,travessa_das_laranjeiras, 55),]
-)).
-
-ruaSvicente(grafo([rua_do_carvalhal, rua_dos_sinos, rua_de_espanha, rua_santa_teresa],
-  [aresta(rua_do_carvalhal, rua_dos_sinos, 74),
-   aresta(rua_do_carvalhal, rua_de_espanha, 405),
-   aresta(rua_do_carvalhal, rua_santa_teresa, 199),]
-)).
-
-ruasNogueira(grafo([],)).
-
-
+%estafeta(idºde estafeta,nome,contacto,flag)
+estafeta (1, 'Abílio Pereira', 968574572,'base')
+estafeta (2, 'Maria Costa'   , 925876447,'naobase')
+estafeta (3, 'Sandra Silva'  , 957857458,'base')
+estafeta (4, 'Pedro Rocha'   , 923454374,'base')
+estafeta (5, 'Madalena Dias' , 934543456,'naobase')
+estafeta (6, 'Paulo Marques' , 923432312,'base')
+estafeta (7, 'António Soares', 964332124, 'naobase')
