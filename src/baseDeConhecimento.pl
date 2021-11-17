@@ -37,10 +37,10 @@ encomenda(10,100,122,24,3).
 
 %--------Estafeta-------------------
 %estafeta(idºde estafeta,nome,contacto,flag)
-estafeta (1, 'Abílio Pereira', 968574572,'base')
-estafeta (2, 'Maria Costa'   , 925876447,'naobase')
-estafeta (3, 'Sandra Silva'  , 957857458,'base')
-estafeta (4, 'Pedro Rocha'   , 923454374,'base')
-estafeta (5, 'Madalena Dias' , 934543456,'naobase')
-estafeta (6, 'Paulo Marques' , 923432312,'base')
-estafeta (7, 'António Soares', 964332124, 'naobase')
+estafeta(1, 'Abílio Pereira', 968574572,'base').
+estafeta(2, 'Maria Costa'   , 925876447,'naobase').
+estafeta(3, 'Sandra Silva'  , 957857458,'naobase').
+estafeta(4, 'Pedro Rocha'   , 923454374,'base').
+estafeta(5, 'Madalena Dias' , 934543456,'naobase').
+estafeta(6, 'Paulo Marques' , 923432312,'base').
+estafeta(7, 'António Soares', 964332124, 'naobase'). 
