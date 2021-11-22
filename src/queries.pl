@@ -2,6 +2,7 @@
 
 :-style_check(-singleton).
 
+%------------------------------------------------
 % identificar o estafeta que utilizou mais vezes um meio de transporte mais ecológico;
 mais_ecologico(LIds, IdR) :-
     mais_ecologico_aux(LIds, -1, IdR).
@@ -37,3 +38,21 @@ conta_veiculos(['Mota'|T], Sum, Count) :-
 conta_veiculos(['Carro'|T], Sum, Count) :-
     conta_veiculos(T, Sum, Count_),
     Count is Count_ + 1.
+
+
+
+%------------------------------------------------
+% identificar que estafetas entregaram determinada(s) encomenda(s) a um determinado cliente;
+quem_entegou([], _, []).
+quem_entegou([IdEnc|IdsEnc], IdCli, [IdEstaf|IdsEstaf]) :-
+    encomendaGerida(IdEnc, _, _, _, IdCli, _, IdEstaf),
+    \+ member(IdEstaf, IdsEstaf),
+    quem_entegou(IdsEnc, IdCli, IdsEstaf).
+quem_entegou([IdEnc|IdsEnc], IdCli, IdsEstaf) :-
+    encomendaGerida(IdEnc, _, _, _, IdCli, _, IdEstaf),
+    member(IdEstaf, IdsEstaf),
+    quem_entegou(IdsEnc, IdCli, IdsEstaf).    
+
+
+
+%------------------------------------------------

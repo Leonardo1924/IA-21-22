@@ -1,6 +1,10 @@
 :-consult('baseDeConhecimento.pl').
 
 :-dynamic (encomendaGerida/7).
+:-style_check(-singleton).
+
+
+
 
 
 encontraEstafetaLivre(IdEstafeta) :-
