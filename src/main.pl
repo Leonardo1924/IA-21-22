@@ -32,8 +32,9 @@ action_for(1) :-
     function1(Max,IdNomes),
     write('Estafeta: '),
     write(IdNomes),nl,
-    write('Número de Vezes:')
-    write(Max),nl.
+    write('Número de Vezes:'),
+    write(Max),
+    nl.
 
 action_for(2) :-
     function2(L),

@@ -8,7 +8,7 @@
 
 
 
-%Base DO Conhecimento
+%Base do Conhecimento
 
 %--------------Clientes--------------
 %cliente(idºde cliente, nome, nif,rua,porta,freguesia, telemovel)
