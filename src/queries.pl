@@ -56,3 +56,11 @@ quem_entegou([IdEnc|IdsEnc], IdCli, IdsEstaf) :-
 
 
 %------------------------------------------------
+% identificar os clientes servidos por um determinado estafeta;
+quem_recebeu(IdEstaf, IdsCli) :-
+    findall(IdCli, encomendaGerida(_, _, _, _, IdCli, _, IdEstaf), IdsCli).
+
+
+
+%------------------------------------------------
+% calcular o valor faturado pela Green Distribution num determinado dia;
