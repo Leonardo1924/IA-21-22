@@ -1,9 +1,8 @@
+
+:-include('funcionalidades.pl').
+
+
 %MENU
-
-:- consult('gestao.pl').
-:- consult('funcionalidades.pl').
-
-
 
 main :-
     repeat,
@@ -40,7 +39,6 @@ action_for(1) :-
 action_for(2) :-
 function2([2,3,4],2,Lista).
     write('Cliente : '),
-
     write(L), nl.
 
 action_for(3) :-

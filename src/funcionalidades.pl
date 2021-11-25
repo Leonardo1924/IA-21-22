@@ -1,7 +1,8 @@
 %Funcionalidades
 
-:- consult('predicadosAuxiliares.pl').
-:- consult('baseDeConhecimento.pl').
+:- include('predicadosAuxiliares.pl').
+:- include('baseDeConhecimento.pl').
+:- include('gestao.pl').
 
 :-style_check(-singleton).
 
@@ -69,33 +70,37 @@ quem_recebeu(IdEstaf, IdsCli) :-
 % Q4 - calcular o valor faturado pela Green Distribution num determinado dia;
 
 faturado(Dia,Total) :-
-    findall(Preco, encomendaGerida(_,_,_,_,_,_, Dia, Preco),Total),
+    findall(Preco, encomendaGerida(_,_,_,_,_,_,_, Dia, Preco),Total),
             Faturacao is Total + Preco.
 %-------------------------------------------------------------
 % Q5 - Zona com maior volume de entregas
-%encomendaGerida(Id, Peso, Vol, Prazo, Cliente, Veiculo, Estaf,Dia,Preco)
+%encomendaGerida(Id, Peso, Vol, Prazo, Cliente, Veiculo, Estaf, Dia, Preco)
+%cliente(idºde cliente, nome, nif, rua, porta, freguesia, telemovel)
 
-mais_volume(Ids, IdR) :-
-    mais_volume_aux(LIds, -1, IdR).
+mais_volume(FregR) :-
+    findall((IdCliente, Volume), encomendaGerida(_, _, Volume, _, IdCliente, _, _, _, _), TuplosIdVol),
+    map_id_to_freg(TuplosIdVol, TuplosFregVol),
+    max_vol(TuplosFregVol, TuplosFregVol, -1, FregR).
 
-mais_volume_aux([], _, null).
-mais_volume_aux([Id],_, FreguesiaResultado).
-mais_volume_aux([Id|Ids],Max, MFregusia) :-
-    encontraFreguesia(findall(IdCliente, encomendaGerida(_,_,_,_,IdCliente,_,_,_,_),ListaFreguesias)),
-    contaFreguesia(ListaFreguesias,Somatorio,Total),
-    Total \= 0,
-    mais_volume_aux(Ids,Max_,_),
-    Max > Max_.
-mais_volume_aux([Id|Ids],Max_,FreguesiaN) :-
-    encontraFreguesia(findall(IdCliente, encomendaGerida(_,_,_,_,IdCliente,_,_,_,_),ListaFreguesias)),
-    contaFreguesia(ListaFreguesias,Somatorio,Total),
-    Total \= 0
-    mais_volume_aux(Ids,Max_,FreguesiaN)
-    Max =< Max_.
+map_id_to_freg([], []).
+map_id_to_freg([(IdCli, V)|T1], [(Freg, V)|T2]) :-
+    cliente(IdCli, _, _, _, _, Freg, _),
+    map_id_to_freg(T1, T2).
 
+max_vol(_, [], -1, null).
+max_vol(L, [(Freg, _)|T], CurrV, Freg) :-
+    max_vol(L, T, CurrV_, _),
+    soma_volume_por_freg(L, Freg, CurrV),
+    CurrV > CurrV_.
+max_vol(L, [(Freg, _)|T], CurrV_, Freg_) :-
+    max_vol(L, T, CurrV_, Freg_),
+    soma_volume_por_freg(L, Freg, CurrV),
+    CurrV =< CurrV_.
 
-
-contaFreguesia([],Atual,0).
-contaFreguesia([H|T],Atual,Count_):- contaFreguesia(T,Atual,Total), Count_ is 1+Total.
-contaFreguesia([H|T],Atual,Total):- H \= Atual,contaFreguesia(T,Atual,Total).
-    
+soma_volume_por_freg([], _, 0).
+soma_volume_por_freg([(Freg, V)|T], Freg, TotalV) :-
+    soma_volume_por_freg(T, Freg, TotalV_),
+    TotalV is TotalV_ + V.
+soma_volume_por_freg([(F, V)|T], Freg, TotalV) :-
+    F \= Freg,
+    soma_volume_por_freg(T, Freg, TotalV).

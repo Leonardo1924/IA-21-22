@@ -2,16 +2,15 @@
 :-set_prolog_flag(single_var_warnings,off).
 :-set_prolog_flag(answer_write_options,[max_depth(0)]).
 
-:-dynamic (cliente/7).
-:-dynamic (estafeta/4).
-:-dynamic (encomenda/5).
-
+:-discontiguous cliente/7.
+:-discontiguous encomenda/6.
+:-discontiguous estafeta/4.
 
 
 %Base do Conhecimento
 
 %--------------Clientes--------------
-%cliente(idºde cliente, nome, nif,rua,porta,freguesia, telemovel)
+%cliente(idºde cliente, nome, nif, rua, porta, freguesia, telemovel)
 cliente(1,'Jose Andrade'      ,123469696,'Rua dos Rios','2','svitor',969798321).
 cliente(2,'Rafael Pereira'    ,123456789,'Rua dos Sinos','5','svicente',966969698).
 cliente(3,'Maria Silva'       ,987654321,'Rua das Teclas','8','celeiros',969798231).
