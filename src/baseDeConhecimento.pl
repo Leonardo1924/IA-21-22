@@ -23,17 +23,18 @@ cliente(8,'Leonardo Henriques',255225571,'Avenida da Trindade','2','svitor',9692
 
 
 %---------Encomedas---------------
-%encomenda(id,peso,volume,prazo, idCliente) prazo: 0- imediato, 24-1 dia
-encomenda(1,5,20,0,2).
-encomenda(2,15,10,2,7).
-encomenda(3,10,23,6,8).
-encomenda(4,20,30,24,1).
-encomenda(5,30,45,0,2).
-encomenda(6,24,43,2,4).
-encomenda(7,55,23,6,3).
-encomenda(8,40,24,6,6).
-encomenda(9,30,13,24,5).
-encomenda(10,100,122,24,3).
+%encomenda(id,peso,volume,prazo, idCliente, dataInicial) prazo: 0- imediato, 24-1 dia SACAR O ID OD CLIENTE!!!
+
+encomenda(1,5,20,0,2,12/11).
+encomenda(2,15,10,2,7,10/07).
+encomenda(3,10,23,6,8,05/12).
+encomenda(4,20,30,24,1,06/12).
+encomenda(5,30,45,0,2,07/10).
+encomenda(6,24,43,2,4,03/12).
+encomenda(7,55,23,6,3,08/04).
+encomenda(8,40,24,6,6,11/05).
+encomenda(9,30,13,24,5,08/11).
+encomenda(10,100,122,24,3,04/12).
 
 %--------Estafeta-------------------
 %estafeta(idºde estafeta,nome,contacto,flag)
