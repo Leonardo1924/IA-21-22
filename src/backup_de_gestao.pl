@@ -1,3 +1,4 @@
+/*
 %Predicados Auxiliares
 :-consult('baseDeConhecimento.pl').
 
@@ -71,6 +72,6 @@ gerirEncomenda([Id|Ids], [Peso|Pesos], [Vol|Vols], [Prazo|Prazos], [Cliente|Clie
 encontraFreguesia([IdCliente|IdsCliente],[Result|Results]):- 
     findall(Freguesia ,cliente(IdCliente,_,_,_,_,Freguesia,_),Result).
     encontraFreguesia(IdsCliente,Results).
-
+*/
 
 
