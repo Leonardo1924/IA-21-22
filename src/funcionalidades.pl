@@ -1,8 +1,7 @@
 %Funcionalidades
 
 :- consult('predicadosAuxiliares.pl').
-:- consult('BaseDeConhecimento.pl').
-:-consult('.pl').
+:- consult('baseDeConhecimento.pl').
 
 :-style_check(-singleton).
 
