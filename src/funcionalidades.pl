@@ -69,9 +69,10 @@ quem_recebeu(IdEstaf, IdsCli) :-
 %------------------------------------------------
 % Q4 - calcular o valor faturado pela Green Distribution num determinado dia;
 
-faturado(Dia,Total) :-
-    findall(Preco, encomendaGerida(_,_,_,_,_,_,_, Dia, Preco),Total),
-            Faturacao is Total + Preco.
+faturado(Dia, Total) :-
+    findall(Preco, encomendaGerida(_,_,_,_,_,_,_, Dia, Preco), ListaPrecos),
+    sum_list(ListaPrecos, Total).
+
 %-------------------------------------------------------------
 % Q5 - Zona com maior volume de entregas
 %encomendaGerida(Id, Peso, Vol, Prazo, Cliente, Veiculo, Estaf, Dia, Preco)
