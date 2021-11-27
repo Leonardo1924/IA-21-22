@@ -105,3 +105,10 @@ soma_volume_por_freg([(Freg, V)|T], Freg, TotalV) :-
 soma_volume_por_freg([(F, V)|T], Freg, TotalV) :-
     F \= Freg,
     soma_volume_por_freg(T, Freg, TotalV).
+
+%-------------------------------------------------------------
+% Q10 - 10. Peso total transportado no dia X 
+
+pesoTransport(Dia, Total) :-
+    findall(Peso, encomendaGerida(_, Peso,_,_,_,_,_, Dia,_), ListaPesos),
+    sum_list(ListaPrecos, Total).
