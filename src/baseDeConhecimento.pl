@@ -1,11 +1,9 @@
-:-set_prolog_flag(discontiguous_warnings,off).
-:-set_prolog_flag(single_var_warnings,off).
 :-set_prolog_flag(answer_write_options,[max_depth(0)]).
 
-:-discontiguous cliente/7.
-:-discontiguous encomenda/6.
-:-discontiguous estafeta/4.
+:-style_check(-singleton).
+:-style_check(-discontiguous).
 
+:-dynamic(estafeta/4).
 
 %Base do Conhecimento
 

@@ -4,11 +4,11 @@
 :-style_check(-discontiguous).
 
 % runtime defined
-:-dynamic (encomendaGerida/9).
+:-dynamic(encomendaGerida/9).
 
 % a definir
 % entrega(IdEnc, Nota).
-:- dynamic (entrega/2).
+:-dynamic(entrega/2).
 
 encontraEstafetaLivre(IdEstafeta) :-
     estafeta(IdEstafeta, _, _, 'base').
@@ -41,27 +41,43 @@ auxiliarCliente(ListaClientes) :- findall(Cliente, encomenda(_, _, _, _, Cliente
 auxiliarData(ListaDatas) :- findall(Data,encomenda(_,_,_,_,_,Data),ListaDatas).
 
 listaVeiculos([],[]).
-listaVeiculos([H|Tail],[Veiculo|Result]):- 
-    decideVeiculo(Veiculo,H), 
-    listaVeiculos(Tail,Result).
+listaVeiculos([Peso|Pesos],[Veiculo|Result]):- 
+    decideVeiculo(Veiculo,Peso), 
+    listaVeiculos(Pesos,Result).
 
-listaEstafetas([],[]).
-listaEstafetas([H|Tail],[IdEstafeta|Result]):- 
+listaEstafetas([]).
+listaEstafetas([IdEstafeta|Result]):- 
     encontraEstafetaLivre(IdEstafeta), 
-    retract(estafeta(IdEstafeta,A,B,_)),
-    assert(estafeta(IdEstafeta,A,B,'naobase')),
-    listaEstafetas(Tail,Result).
-listaEstafetas([H|Tail],[0|Result]) :-
+    retract(estafeta(IdEstafeta, _, _, 'base')),
+    assert(estafeta(IdEstafeta, _, _, 'naobase')),
+    listaEstafetas(Result).
+listaEstafetas(['n/a'|Result]) :-
     \+ encontraEstafetaLivre(IdEstafeta),
-    listaEstafetas(Tail,Result).
+    listaEstafetas(Result).
     
 listaPrecos([],[],[]).
 listaPrecos([Veiculo|Veiculos],[Prazo|Prazos],[Preco|Precos]):- 
     calculaPreco(Veiculo,Prazo,Preco), 
-    listaPrecos(Veiculos,Prazos,Precos),
-    batata([]).
+    listaPrecos(Veiculos,Prazos,Precos).
 
-gerirEncomenda([],[],[],[],[],[],[]).
-gerirEncomenda([Id|Ids], [Peso|Pesos], [Vol|Vols], [Prazo|Prazos], [Cliente|Clientes], [Data|Datas], [Veiculo|Veiculos], [Estaf|Estafs], [Preco|Precos]) :-
+gerirEncomendas([],[],[],[],[],[],[],[],[]).
+gerirEncomendas([Id|Ids], [Peso|Pesos], [Vol|Vols], [Prazo|Prazos], [Cliente|Clientes], 
+                [Data|Datas], [Veiculo|Veiculos], [Estaf|Estafs], [Preco|Precos]):-
+    \+ Estaf == 'n/a', 
     assert(encomendaGerida(Id, Peso, Vol, Prazo, Cliente, Data, Veiculo, Estaf, Preco)),
-    gerirEncomenda(Ids, Pesos, Vols, Prazos, Clientes, Datas, Veiculos, Estafs, Precos).
+    gerirEncomendas(Ids, Pesos, Vols, Prazos, Clientes, Datas, Veiculos, Estafs, Precos).
+gerirEncomendas([_|Ids], [_|Pesos], [_|Vols], [_|Prazos], [_|Clientes], 
+                [_|Datas], [_|Veiculos], ['n/a'|Estafs], [_|Precos]) :-
+    gerirEncomendas(Ids, Pesos, Vols, Prazos, Clientes, Datas, Veiculos, Estafs, Precos).
+
+gerir :-
+    auxiliarId(Ids),
+    auxiliarPeso(Pesos),
+    auxiliarVol(Vols),
+    auxiliarPrazo(Prazos),
+    auxiliarCliente(Clientes),
+    auxiliarData(Datas),
+    listaVeiculos(Pesos, Veiculos),
+    listaEstafetas(Estafs),
+    listaPrecos(Veiculos, Prazos, Precos),
+    gerirEncomendas(Ids, Pesos, Vols, Prazos, Clientes, Datas, Veiculos, Estafs, Precos).
