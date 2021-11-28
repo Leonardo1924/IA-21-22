@@ -3,9 +3,12 @@
 :-style_check(-singleton).
 :-style_check(-discontiguous).
 
-%runtime defined
-:-dynamic (encomendaGerida/7).
+% runtime defined
+:-dynamic (encomendaGerida/9).
 
+% a definir
+% entrega(IdEnc, Nota).
+:- dynamic (entrega/2).
 
 encontraEstafetaLivre(IdEstafeta) :-
     estafeta(IdEstafeta, _, _, 'base').
@@ -35,7 +38,7 @@ auxiliarPeso(ListaPesos) :- findall(Peso, encomenda(_, Peso, _, _, _, _), ListaP
 auxiliarVol(ListaVol) :- findall(Vol, encomenda(_, _, Vol, _, _, _), ListaVol).
 auxiliarPrazo(ListaPrazo) :- findall(Prazo, encomenda(_, _, _, Prazo, _, _), ListaPrazo).
 auxiliarCliente(ListaClientes) :- findall(Cliente, encomenda(_, _, _, _, Cliente, _),ListaClientes).
-auxiliarDias(ListaDias) :- findall(Dia,encomenda(_,_,_,_,_,Dia),ListaDias).
+auxiliarData(ListaDatas) :- findall(Data,encomenda(_,_,_,_,_,Data),ListaDatas).
 
 listaVeiculos([],[]).
 listaVeiculos([H|Tail],[Veiculo|Result]):- 
@@ -52,16 +55,13 @@ listaEstafetas([H|Tail],[0|Result]) :-
     \+ encontraEstafetaLivre(IdEstafeta),
     listaEstafetas(Tail,Result).
     
-gerirEncomenda([],[],[],[],[],[],[]).
-gerirEncomenda([Id|Ids], [Peso|Pesos], [Vol|Vols], [Prazo|Prazos], [Cliente|Clientes], [Veiculo|Veiculos], [Estaf|Estafs]) :-
-    assert(encomendaGerida(Id, Peso, Vol, Prazo, Cliente, Veiculo, Estaf)),
-    gerirEncomenda(Ids, Pesos, Vols, Prazos, Clientes, Veiculos, Estafs).
-
 listaPrecos([],[],[]).
 listaPrecos([Veiculo|Veiculos],[Prazo|Prazos],[Preco|Precos]):- 
     calculaPreco(Veiculo,Prazo,Preco), 
-    listaPrecos(Veiculos,Prazos,Precos).
+    listaPrecos(Veiculos,Prazos,Precos),
+    batata([]).
 
-encontraFreguesia([IdCliente|IdsCliente],[Result|Results]):- 
-    findall(Freguesia, cliente(IdCliente,_,_,_,_,Freguesia,_),Result).
-    encontraFreguesia(IdsCliente,Results).
+gerirEncomenda([],[],[],[],[],[],[]).
+gerirEncomenda([Id|Ids], [Peso|Pesos], [Vol|Vols], [Prazo|Prazos], [Cliente|Clientes], [Data|Datas], [Veiculo|Veiculos], [Estaf|Estafs], [Preco|Precos]) :-
+    assert(encomendaGerida(Id, Peso, Vol, Prazo, Cliente, Data, Veiculo, Estaf, Preco)),
+    gerirEncomenda(Ids, Pesos, Vols, Prazos, Clientes, Datas, Veiculos, Estafs, Precos).
