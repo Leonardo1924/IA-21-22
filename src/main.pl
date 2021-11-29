@@ -25,38 +25,41 @@ main :-
     write('------------------------------------------------------------------------------------------------'), nl,nl,
     write('Choose : '),
     read(Z), nl,
-    %( Z = 0 -> !, fail ; true ),
+    ( Z = 0 -> !, fail ; true ),
     nl,nl,
     action_for(Z),
     fail.
 
+action_for(X) :- 
+	write('Action for '), 
+	write(X), nl.
 %Funcionalidades
+
 action_for(1) :-
-    write('entrou'),
     mais_ecologico(Id),
     write('Estafeta mais ecológico: '),
     write(Id), nl.
 
 action_for(2) :-
     write('Insira encomendas separadas por virgula: '),
-    read(Str),
+    read(Str),nl,
     split_string(Str, ",", "\n ", L),
     write('Insira cliente: '),
-    read(Id),
+    read(Id),nl,
     quem_entregou(L, Id, R),
     write(R), nl.
 
 action_for(3) :-
     write('Inserir estafeta: '),
-    read(Id),
+    read(Id),nl,
     quem_recebeu(Id, IdsCli),
     write(IdsCli), nl.
 
 action_for(4) :-
-    write('Insira o mês (2 dígitos)'),
-    read(M),
-    write('Insira o dia (2 dígitos)'),
-    read(D),
+    write('Insira o mes (2 digitos)'),
+    read(M),nl,
+    write('Insira o dia (2 digitos)'),
+    read(D),nl,
     faturado((M,D), Total),
     write(Total), nl.
 
@@ -66,45 +69,45 @@ action_for(5) :-
 
 action_for(6) :-
     write('Insira o estafeta: '),
-    read(Id),
+    read(Id),nl,
     class_media(Id, Avg),
     write(Avg), nl.
 
 action_for(7) :-
-    write('Insira o 1º mês (2 dígitos)'),
-    read(M1),
-    write('Insira o 1º dia (2 dígitos)'),
-    read(D1),
-    write('Insira o 2º mês (2 dígitos)'),
-    read(M2),
-    write('Insira o 2º dia (2 dígitos)'),
-    read(D2),
+    write('Insira o 1o mes (2 digitos)'),
+    read(M1),nl,
+    write('Insira o 1o dia (2 digitos)'),
+    read(D1),nl,
+    write('Insira o 2o mês (2 digitos)'),
+    read(M2),nl,
+    write('Insira o 2o dia (2 digitos)'),
+    read(D2),nl,
     total_entregas_data_veiculo((M1,D1), (M2,D2), (B,M,C)),
     write('Bicicletas: '), write(B), nl,
     write('Motas: '), write(M), nl,
     write('Carros: '), write(C), nl.
 
 action_for(8) :-
-    write('Insira o 1º mês (2 dígitos)'),
-    read(M1),
-    write('Insira o 1º dia (2 dígitos)'),
-    read(D1),
-    write('Insira o 2º mês (2 dígitos)'),
-    read(M2),
-    write('Insira o 2º dia (2 dígitos)'),
-    read(D2),
+    write('Insira o 1o mês (2 digitos)'),
+    read(M1),nl,
+    write('Insira o 1o dia (2 digitos)'),
+    read(D1),nl,
+    write('Insira o 2o mês (2 digitos)'),
+    read(M2),nl,
+    write('Insira o 2o dia (2 digitos)'),
+    read(D2),nl,
     total_entregas_data((M1,D1), (M2,D2), R),
     write(R), nl.
 
 action_for(9) :-
     total_entregas(R1, R2),
-    write('Não entregues: '), write(R1), nl,
+    write('Nao entregues: '), write(R1), nl,
     write('Entregues: '), write(R2), nl.
 
 action_for(10) :-
-    write('Insira o mês (2 dígitos)'),
+    write('Insira o mes (2 digitos)'),
     read(M),
-    write('Insira o dia (2 dígitos)'),
+    write('Insira o dia (2 digitos)'),
     read(D),
     peso_transportado((M,D), T),
     write(T), nl.
