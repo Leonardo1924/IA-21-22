@@ -4,6 +4,7 @@
 %MENU
 
 main :-
+    init,
     repeat,
     nl,nl,
     write('---------------------------------------------MENU-----------------------------------------------'), nl,
@@ -16,7 +17,10 @@ main :-
     write('|                 7. Numero total de entregas diferentes transportes num intervalo de tempo X  |'), nl,
     write('|                 8. Numero total de entregas pelos estafetas, num intervalo de tempo X        |'), nl,
     write('|                 9. Numero de encomendas entregues Vs nao entregues, num intervalo de tempo X |'), nl,
-    write('|                 10. Peso total transportado no dia X                                         |'),nl,
+    write('|                 10. Peso total transportado no dia X                                         |'), nl,
+    write('|                 11. Selecionar que encomenda foi entregue                                    |'), nl,
+    write('|                 12. Indicar chegada a empresa                                                |'), nl,
+    write('|                 13. Classificar entrega                                                      |'), nl,
     write('|                 0. Exit                                                                      |'), nl,
     write('------------------------------------------------------------------------------------------------'), nl,nl,
     write('Choose : '),
@@ -28,49 +32,95 @@ main :-
 
 %Funcionalidades
 action_for(1) :-
-    function1(Max,IdNomes),
-    write('Estafeta: '),
-    write(IdNomes),nl,
-    write('Número de Vezes:'),
-    write(Max),
-    nl.
+    mais_ecologico(Id),
+    write('Estafeta mais ecológico: '),
+    write(Id), nl.
 
 action_for(2) :-
-function2([2,3,4],2,Lista).
-    write('Cliente : '),
-    write(L), nl.
+    write('Insira encomendas separadas por virgula: '),
+    read(Str),
+    split_string(Str, ",", "\n ", L),
+    write('Insira cliente: '),
+    read(Id),
+    quem_entregou(L, Id, R),
+    write(R), nl.
 
 action_for(3) :-
-    function3(L),
-    write(L), nl.
+    write('Inserir estafeta: '),
+    read(Id),
+    quem_recebeu(Id, IdsCli),
+    write(IdsCli), nl.
 
 action_for(4) :-
-    function4(L),
-    write(L), nl.
+    write('Insira o mês (2 dígitos)'),
+    read(M),
+    write('Insira o dia (2 dígitos)'),
+    read(D),
+    faturado((M,D), Total),
+    write(Total), nl.
 
 action_for(5) :-
-    function5(L),
-    write(L),nl.
+    mais_volume(FregR),
+    write(FregR),nl.
 
 action_for(6) :-
-    function6(L),
-    write(L),nl.
+    write('Insira o estafeta: '),
+    read(Id),
+    class_media(Id, Avg),
+    write(Avg), nl.
 
 action_for(7) :-
-    function7(L),
-    write(L),nl.
+    write('Insira o 1º mês (2 dígitos)'),
+    read(M1),
+    write('Insira o 1º dia (2 dígitos)'),
+    read(D1),
+    write('Insira o 2º mês (2 dígitos)'),
+    read(M2),
+    write('Insira o 2º dia (2 dígitos)'),
+    read(D2),
+    total_entregas_data_veiculo((M1,D1), (M2,D2), (B,M,C)),
+    write('Bicicletas: '), write(B), nl,
+    write('Motas: '), write(M), nl,
+    write('Carros: '), write(C), nl.
 
 action_for(8) :-
-    function8(L),
-    write(L),nl.
+    write('Insira o 1º mês (2 dígitos)'),
+    read(M1),
+    write('Insira o 1º dia (2 dígitos)'),
+    read(D1),
+    write('Insira o 2º mês (2 dígitos)'),
+    read(M2),
+    write('Insira o 2º dia (2 dígitos)'),
+    read(D2),
+    total_entregas_data((M1,D1), (M2,D2), R),
+    write(R), nl.
 
 action_for(9) :-
-    function9(Max,IdNomes),!,
-    write('Estafeta: '),
-    write(IdNomes),nl,
-    write('Nº de vezes: '),
-    write(Max),nl.
+    total_entregas(R1, R2),
+    write('Não entregues: '), write(R1), nl,
+    write('Entregues: '), write(R2), nl.
 
 action_for(10) :-
-    function10(L),
-    write(L), nl.
+    write('Insira o mês (2 dígitos)'),
+    read(M),
+    write('Insira o dia (2 dígitos)'),
+    read(D),
+    peso_transportado((M,D), T),
+    write(T), nl.
+
+action_for(11) :-
+    write('Inserir id de encomenda: '), nl,
+    read(Id),
+    update_entrega(Id).
+
+action_for(12) :-
+    write('Inserir o seu id: '), nl,
+    read(Id),
+    update_entrega(Id).
+
+action_for(13) :-
+    write('Insira a encomenda a classificar: '),
+    read(Id),
+    write('Insera a nota: '),
+    read(Nota),
+    classificar_entrega(Id, Nota).

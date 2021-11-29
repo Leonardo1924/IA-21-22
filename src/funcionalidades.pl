@@ -6,6 +6,10 @@
 
 :-style_check(-singleton).
 
+% a definir
+% entrega(IdEnc, Nota).
+:-dynamic(entrega/3).
+
 %------------------------------------------------
 % Q1 - identificar o estafeta que utilizou mais vezes um meio de transporte mais ecológico
 
@@ -48,15 +52,15 @@ conta_veiculos(['Carro'|T], Sum, Count) :-
 %------------------------------------------------
 % Q2 - identificar que estafetas entregaram determinada(s) encomenda(s) a um determinado cliente
 
-quem_entegou([], _, []).
-quem_entegou([IdEnc|IdsEnc], IdCli, [IdEstaf|IdsEstaf]) :-
+quem_entregou([], _, []).
+quem_entregou([IdEnc|IdsEnc], IdCli, [IdEstaf|IdsEstaf]) :-
     encomendaGerida(IdEnc, _, _, _, IdCli, _, IdEstaf, _, _),
     \+ member(IdEstaf, IdsEstaf),
-    quem_entegou(IdsEnc, IdCli, IdsEstaf).
-quem_entegou([IdEnc|IdsEnc], IdCli, IdsEstaf) :-
+    quem_entregou(IdsEnc, IdCli, IdsEstaf).
+quem_entregou([IdEnc|IdsEnc], IdCli, IdsEstaf) :-
     encomendaGerida(IdEnc, _, _, _, IdCli, _, IdEstaf, _, _),
     member(IdEstaf, IdsEstaf),
-    quem_entegou(IdsEnc, IdCli, IdsEstaf).    
+    quem_entregou(IdsEnc, IdCli, IdsEstaf).    
 
 %------------------------------------------------
 % Q3 - identificar os clientes servidos por um determinado estafeta
@@ -115,15 +119,30 @@ class_media(IdEstaf, Avg) :-
 
 map_id_to_nota([], []).
 map_id_to_nota([IdEnc|IdsEnc], [Nota|Notas]) :-
-    entrega(IdEnc, Nota),
+    entrega(1, IdEnc, Nota),
     map_id_to_nota(IdsEnc, Notas).
 map_id_to_nota([IdEnc|IdsEnc], Notas) :-
-    \+ entrega(IdEnc, _),
+    \+ entrega(1, IdEnc, _),
     map_id_to_nota(IdsEnc, Notas).
 
 %-------------------------------------------------------------
 % Q7 - identificar o número total de entregas pelos diferentes meios de transporte, 
 %      num determinado intervalo de tempo
+
+total_entregas_data_veiculo(DataI, DataF, (B, M, C)) :-
+    findall(Veiculo, (encomendaGerida(_, _, _, _, _, Data, Veiculo, _, _), entre(DataI, Data, DataF)), ListaV),
+    count_veiculos(ListaV, B, M, C).
+
+count_veiculos([], 0, 0, 0).
+count_veiculos(['Bicicleta'|T], B, M, C) :-
+    count_veiculos(T, B_, M, C),
+    B is B_ + 1.
+count_veiculos(['Mota'|T], B, M, C) :-
+    count_veiculos(T, B, M_, C),
+    M is M_ + 1.
+count_veiculos(['Carro'|T], B, M, C) :-
+    count_veiculos(T, B, M, C_),
+    C is C_ + 1.
 
 entre((M1, _), (M, _), (M2, _)) :-
     M1 < M2,
@@ -141,8 +160,29 @@ entre((M1, D1), (M, D), (M2, D2)) :-
     D < D2.
 
 %-------------------------------------------------------------
-% Q10 - Peso total transportado no dia X 
+% Q8 - identificar o número total de entregas pelos estafetas, num determinado intervalo de tempo
+
+total_entregas_data(DataI, DataF, R) :-
+    findall(IdEst, (encomendaGerida(_, _, _, _, _, Data, _, IdEst, _), entre(DataI, Data, DataF)), ListaIds),
+    length(ListaIds, R).
+
+%-------------------------------------------------------------
+% Q9 - identificar o número total de entregas pelos estafetas, num determinado intervalo de tempo
+
+total_entregas(R1, R2) :-
+    findall(Id, entrega(0, Id, _), NotLista),
+    findall(Id, entrega(1, Id, _), YesLista),
+    length(NotLista, R1),
+    length(YesLista, R2).
+
+%-------------------------------------------------------------
+% Q10 - calcular o peso total transportado por estafeta num determinado dia
 
 peso_transportado(Dia, Total) :-
     findall(Peso, encomendaGerida(_, Peso, _, _, _, _, _, Dia, _), ListaPesos),
     sum_list(ListaPesos, Total).
+
+
+
+init :-
+    gerir.
