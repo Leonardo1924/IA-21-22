@@ -30,15 +30,16 @@ listaVeiculos([Peso|Pesos],[Veiculo|Result]):-
     decideVeiculo(Veiculo,Peso), 
     listaVeiculos(Pesos,Result).
 
-listaEstafetas([]).
-listaEstafetas([IdEstafeta|Result]):- 
+
+listaEstafetas([],[]).
+listaEstafetas([H|Tail],[IdEstafeta|Result]):- 
     encontraEstafetaLivre(IdEstafeta), 
-    retract(estafeta(IdEstafeta, _, _, 'base')),
-    assert(estafeta(IdEstafeta, _, _, 'naobase')),
-    listaEstafetas(Result).
-listaEstafetas(['n/a'|Result]) :-
+    retract(estafeta(IdEstafeta,A,B,_)),
+    assert(estafeta(IdEstafeta,A,B,'naobase')),
+    listaEstafetas(Tail,Result).
+listaEstafetas([H|Tail],["n/a"|Result]) :-
     \+ encontraEstafetaLivre(IdEstafeta),
-    listaEstafetas(Result).
+    listaEstafetas(Tail,Result).
     
 listaPrecos([],[],[]).
 listaPrecos([Veiculo|Veiculos],[Prazo|Prazos],[Preco|Precos]):- 
@@ -70,6 +71,7 @@ update_entrega(IdEnc) :-
 update_estafeta(IdEstaf) :-
     retract(estafeta(IdEstaf, Nome, C, 'naobase')),
     assert(estafeta(IdEstaf, Nome, C, 'base')).
+
 
 entregas_popular :-
     findall(Id,encomenda(Id, _, _, _, _, _), Lista),
