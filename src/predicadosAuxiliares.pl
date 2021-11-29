@@ -1,4 +1,3 @@
-:-include('baseDeConhecimento.pl').
 
 :-style_check(-singleton).
 :-style_check(-discontiguous).
@@ -46,23 +45,23 @@ listaPrecos([Veiculo|Veiculos],[Prazo|Prazos],[Preco|Precos]):-
     calculaPreco(Veiculo,Prazo,Preco), 
     listaPrecos(Veiculos,Prazos,Precos).
 
-auxiliarId(ListaIds) :- 
-    findall(Id, (encomenda(Id, _, _, _, _, _), entrega(0, Id, _)), ListaIds).
+auxiliarId(ListaIds) :-
+	 findall(Id,encomenda(Id,_,_,_,_,_),ListaIds).
 
-auxiliarPeso(ListaPesos) :- 
-    findall(Peso, (encomenda(Id, Peso, _, _, _, _), entrega(0, Id, _)), ListaPesos).
+auxiliarPeso(ListaPesos) :-
+	 findall(Peso,encomenda(_,Peso,_,_,_,_),ListaPesos).
 
-auxiliarVol(ListaVol) :-
-    findall(Vol, (encomenda(Id, _, Vol, _, _, _), entrega(0, Id, _)), ListaVol).
+auxiliarVol(ListaVol) :- 
+	findall(Vol,encomenda(_,_,Vol,_,_,_),ListaVol).
 
-auxiliarPrazo(ListaPrazo) :- 
-    findall(Prazo, (encomenda(Id, _, _, Prazo, _, _), entrega(0, Id, _)), ListaPrazo).
+auxiliarPrazo(ListaPrazo) :-
+	 findall(Prazo,encomenda(_,_,_,Prazo,_,_),ListaPrazo).
 
 auxiliarCliente(ListaClientes) :- 
-    findall(Cliente, (encomenda(Id, _, _, _, Cliente, _), entrega(0, Id, _)), ListaClientes).
+	findall(Cliente,encomenda(_,_,_,_,Cliente,_),ListaClientes).
 
 auxiliarData(ListaDatas) :- 
-    findall(Data, (encomenda(Id, _, _, _, _, Data), entrega(0, Id, _)),ListaDatas).
+	findall(Data, encomenda(_, _, _, _, _, Data),ListaDatas).
 
 update_entrega(IdEnc) :-
     retract(entrega(0, IdEnc, N)),
@@ -72,5 +71,12 @@ update_estafeta(IdEstaf) :-
     retract(estafeta(IdEstaf, Nome, C, 'naobase')),
     assert(estafeta(IdEstaf, Nome, C, 'base')).
 
-assert_entregas :-
-    findall(Id, (encomenda(Id, _, _, _, _, _), assert(entrega(0, Id, 0))), L).
+entregas_popular :-
+    findall(Id,encomenda(Id, _, _, _, _, _), Lista),
+    sort(Lista,ListaS),
+    assert_auxiliar(ListaS).
+
+assert_auxiliar([]).
+assert_auxiliar([H|T]) :-  
+	assert(entrega(0,H,0)),
+	assert_auxiliar(T).
