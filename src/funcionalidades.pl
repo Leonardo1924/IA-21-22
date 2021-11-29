@@ -1,7 +1,6 @@
 %Funcionalidades
 
 :- include('predicadosAuxiliares.pl').
-:- include('baseDeConhecimento.pl').
 :- include('gestao.pl').
 
 :-style_check(-singleton).
@@ -14,6 +13,7 @@
 % Q1 - identificar o estafeta que utilizou mais vezes um meio de transporte mais ecológico
 
 mais_ecologico(IdR) :-
+    write('entrou2'),
     findall(Id, estafeta(Id, _, _, _), LIds),
     mais_ecologico_aux(LIds, -1, IdR).
 
