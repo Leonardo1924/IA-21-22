@@ -24,14 +24,15 @@ main :-
     write('|                 0. Exit                                                                      |'), nl,
     write('------------------------------------------------------------------------------------------------'), nl,nl,
     write('Choose : '),
-    read(Z),
-    ( Z = 0 -> !, fail ; true ),
+    read(Z), nl,
+    %( Z = 0 -> !, fail ; true ),
     nl,nl,
     action_for(Z),
     fail.
 
 %Funcionalidades
 action_for(1) :-
+    write('entrou'),
     mais_ecologico(Id),
     write('Estafeta mais ecológico: '),
     write(Id), nl.
