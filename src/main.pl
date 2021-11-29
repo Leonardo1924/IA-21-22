@@ -1,15 +1,17 @@
 :-include('funcionalidades.pl').
+:-include('predicadosAuxiliares').
 
 
 %MENU
 
+
 main :-
-    init,
+    gerir,
     repeat,
     nl,nl,
     write('---------------------------------------------MENU-----------------------------------------------'), nl,
     write('|                 1. Estafeta mais ecologico                                                   |'), nl,
-    write('|                 2. Estafeta entrega a encomenda A ao cliente B                               |'), nl,
+    write('|                 2. Estafeta que realizaram entregas                                          |'), nl,
     write('|                 3. Cliente servido por Estafeta A                                            |'), nl,
     write('|                 4. Valor faturado no Dia X                                                   |'), nl,
     write('|                 5. Zona com maior volume de entregas                                         |'), nl,
@@ -23,7 +25,7 @@ main :-
     write('|                 13. Classificar entrega                                                      |'), nl,
     write('|                 0. Exit                                                                      |'), nl,
     write('------------------------------------------------------------------------------------------------'), nl,nl,
-    write('Choose : '),
+    write('Choose '),
     read(Z), nl,
     ( Z = 0 -> !, fail ; true ),
     nl,nl,
@@ -40,14 +42,22 @@ action_for(1) :-
     write('Estafeta mais ecológico: '),
     write(Id), nl.
 
+auxiliar_number([H|T],[H1|T1]) :- 
+	number_codes(H1,H)
+	auxiliar_number(T,T1).
+
+
 action_for(2) :-
     write('Insira encomendas separadas por virgula: '),
     read(Str),nl,
-    split_string(Str, ",", "\n ", L),
+    split_string(Str, ",", "\n ", Lista),
+    auxiliar_number(Lista,R),
+
     write('Insira cliente: '),
     read(Id),nl,
-    quem_entregou(L, Id, R),
-    write(R), nl.
+    number_codes(Id,IdCliente),
+    quem_entregou(R, IdCliente, Resposta),
+    write(Resposta), nl.
 
 action_for(3) :-
     write('Inserir estafeta: '),
@@ -127,4 +137,6 @@ action_for(13) :-
     read(Id),
     write('Insera a nota: '),
     read(Nota),
-    classificar_entrega(Id, Nota).
+    classificar_entrega(Id, Nota),
+    findall(Nota,entrega(_,_,Nota),Notas),
+    write(Notas).
