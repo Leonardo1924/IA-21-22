@@ -18,8 +18,8 @@ gerirEncomendas([_|Ids], [_|Pesos], [_|Vols], [_|Prazos], [_|Clientes],
                 [_|Datas], [_|Veiculos], ['n/a'|Estafs], [_|Precos]) :-
     gerirEncomendas(Ids, Pesos, Vols, Prazos, Clientes, Datas, Veiculos, Estafs, Precos).
 
-gerir :-
-    assert_entregas,
+gerir:-
+    entregas_popular,
     auxiliarId(Ids),
     auxiliarPeso(Pesos),
     auxiliarVol(Vols),
@@ -28,7 +28,7 @@ gerir :-
     auxiliarData(Datas),
     listaVeiculos(Pesos, Veiculos),
     listaEstafetas(Estafs),
-    listaPrecos(Veiculos, Prazos, Precos),
+    listaPrecos(Veiculos, Prazos, Precos).
     gerirEncomendas(Ids, Pesos, Vols, Prazos, Clientes, Datas, Veiculos, Estafs, Precos).
 
 classificar_entrega(Id, Nota) :-
