@@ -13,11 +13,10 @@
 % Q1 - identificar o estafeta que utilizou mais vezes um meio de transporte mais ecológico
 
 mais_ecologico(IdR) :-
-    write('entrou2'),
     findall(Id, estafeta(Id, _, _, _), LIds),
     mais_ecologico_aux(LIds, -1, IdR).
-
-mais_ecologico_aux([], _, null).
+ 
+mais_ecologico_aux([], _, null). %lista vazia? []
 mais_ecologico_aux([Id], _, Id).
 mais_ecologico_aux([Id|Ids], Avg, Id) :-
     findall(Veiculo, encomendaGerida(_, _, _, _, _, Veiculo, Id,_,_), ListaVeiculos),
@@ -28,6 +27,7 @@ mais_ecologico_aux([Id|Ids], Avg, Id) :-
     Avg > Avg_.
 mais_ecologico_aux([Id|Ids], Avg_, Id_) :-
     findall(Veiculo, encomendaGerida(_, _, _, _, _, Veiculo, Id,_,_), ListaVeiculos),
+    write(ListaVeiculos),
     conta_veiculos(ListaVeiculos, Sum, Count),
     Count \= 0,
     mais_ecologico_aux(Ids, Avg_, Id_),
@@ -52,15 +52,13 @@ conta_veiculos(['Carro'|T], Sum, Count) :-
 %------------------------------------------------
 % Q2 - identificar que estafetas entregaram determinada(s) encomenda(s) a um determinado cliente
 
-quem_entregou([], _, []).
-quem_entregou([IdEnc|IdsEnc], IdCli, [IdEstaf|IdsEstaf]) :-
-    encomendaGerida(IdEnc, _, _, _, IdCli, _, IdEstaf, _, _),
-    \+ member(IdEstaf, IdsEstaf),
-    quem_entregou(IdsEnc, IdCli, IdsEstaf).
-quem_entregou([IdEnc|IdsEnc], IdCli, IdsEstaf) :-
-    encomendaGerida(IdEnc, _, _, _, IdCli, _, IdEstaf, _, _),
-    member(IdEstaf, IdsEstaf),
-    quem_entregou(IdsEnc, IdCli, IdsEstaf).    
+quem_entregou([], _, _).
+quem_entregou([IdEnc|IdsEnc], IdCli,[IdEstaf|R]) :-
+    findall(IdEstaf, encomendaGerida(IdEnc, _, _, _, IdCli, _, _, IdEstaf, _),ListaIdEstaf),
+    write(ListaIdEstaf),
+    quem_entregou(IdsEnc, IdCli, R).
+
+   
 
 %------------------------------------------------
 % Q3 - identificar os clientes servidos por um determinado estafeta
@@ -184,5 +182,3 @@ peso_transportado(Dia, Total) :-
 
 
 
-init :-
-    gerir.
