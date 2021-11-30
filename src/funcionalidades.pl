@@ -73,9 +73,11 @@ quem_recebeu(IdEstaf, [IdCli|IdsCli]) :-
 %------------------------------------------------
 % Q4 - calcular o valor faturado pela Green Distribution num determinado dia
 
-faturado(Dia, Total) :-
-    findall(Preco, encomendaGerida(_,_,_,_,_,_,_, Dia, Preco), ListaPrecos),
-    sum_list(ListaPrecos, Total).
+faturado((M,D),Total) :-
+    write('Dia : '), write((M,D)), nl,
+    findall(Preco, encomendaGerida(_,_,_,_,_,(M,D),_,_,Preco), ListaPrecos),
+    write('Preco : '), write(ListaPrecos),nl,
+    sum_list(ListaPrecos,Total).
 
 %-------------------------------------------------------------
 % Q5 - Zona com maior volume de entregas
@@ -131,41 +133,56 @@ map_id_to_nota([IdEnc|IdsEnc], Notas) :-
 % Q7 - identificar o número total de entregas pelos diferentes meios de transporte, 
 %      num determinado intervalo de tempo
 
-total_entregas_data_veiculo(DataI, DataF, (B, M, C)) :-
-    findall(Veiculo, (encomendaGerida(_, _, _, _, _, Data, Veiculo, _, _), entre(DataI, Data, DataF)), ListaV),
-    count_veiculos(ListaV, B, M, C).
 
+total_entregas_data_veiculo((MI,DI),(MF,DF),(B, M, C),Resultado) :-
+  setof(Veiculo, (encomendaGerida(_, _, _, _, _, (M,D), Veiculo, _, _) , entre((MI,DI),(M,D),(MF,DF))),Resultado),
+   % concatenar(H,Resultado),
+    write(Resultado).
+   %count_veiculos(Resultado,B,M,C).
+
+   
+
+%concatenar(Veiculo, [Veiculo|ListaVeiculosTotal]).
+
+ 
 count_veiculos([], 0, 0, 0).
-count_veiculos(['Bicicleta'|T], B, M, C) :-
-    count_veiculos(T, B_, M, C),
-    B is B_ + 1.
+count_veiculos(['Bicicleta'|T], B, M, C) :- 
+    write('entrou'), nl,
+    write(B),
+    count_veiculos(T,B_,M,C),
+    B is B_+1.
+    
+
 count_veiculos(['Mota'|T], B, M, C) :-
-    count_veiculos(T, B, M_, C),
-    M is M_ + 1.
-count_veiculos(['Carro'|T], B, M, C) :-
-    count_veiculos(T, B, M, C_),
+    write('entrou2'), nl,
+    count_veiculos(T,B,M_,C),
+    M is M_+1.
+
+
+count_veiculos(['Carro'], B, M, C) :-
+    write('entrou3'), nl,
+    count_veiculos(T,B,M,C_),
     C is C_ + 1.
 
-entre((M1, _), (M, _), (M2, _)) :-
-    M1 < M2,
-    M1 < M,
-    M < M2.
-entre((M1, D1), (M, D), (M2, D2)) :-
+
+
+entre((M1, D1), (M,D), (M2, D2)) :-
     M1 =:= M,
-    M < M2,
-    D1 < D,
-    D2 < D.
-entre((M1, D1), (M, D), (M2, D2)) :-
+    M =< M2,
+    D1 =< D,
+    D2 =< D. 
+
+entre((M1, D1), (M,D), (M2, D2)) :-
     M =:= M2,
-    M1 < M,
-    D1 < D,
-    D < D2.
+    M1 =< M,
+    D1 =< D,
+    D =< D2.
 
 %-------------------------------------------------------------
 % Q8 - identificar o número total de entregas pelos estafetas, num determinado intervalo de tempo
 
 total_entregas_data(DataI, DataF, R) :-
-    findall(IdEst, (encomendaGerida(_, _, _, _, _, Data, _, IdEst, _), entre(DataI, Data, DataF)), ListaIds),
+    %findall(IdEst, (encomendaGerida(_, _, _, _, _, Data, _, IdEst, _), datas_entre(DataI, Data, DataF)), ListaIds),
     length(ListaIds, R).
 
 %-------------------------------------------------------------
