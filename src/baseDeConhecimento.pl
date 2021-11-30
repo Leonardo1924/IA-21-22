@@ -21,23 +21,16 @@ cliente(8,'Leonardo Henriques',255225571,'Avenida da Trindade','2','svitor',9692
 %---------Encomendas---------------
 %encomenda(id de encomenda, peso, volume, prazo, idCliente, dataInicial) 
 %prazo: 0 -> imediato; 24 -> 1 dia
-encomenda(1,5,20,0,2,(12,11)).
-encomenda(2,15,10,2,7,(10,23)).
-encomenda(3,10,23,6,8,(05,11)).
-encomenda(4,20,30,24,1,(06,18)).
-encomenda(5,30,45,0,2,(07,16)).
-encomenda(6,24,43,2,4,(03,12)).
-encomenda(7,55,23,6,3,(08,22)).
-encomenda(8,40,24,6,6,(11,05)).
-encomenda(9,30,13,24,5,(08,30)).
-encomenda(10,100,122,24,3,(04,12)).
+encomenda(1,70,20,0,2,(01,01)).
+encomenda(2,15,10,2,2,(01,02)).
+encomenda(3,1,23,6,8,(01,03)).
 
 %--------Estafeta-------------------
 %estafeta(id de estafeta, nome, contacto, flag)
-estafeta(1, 'Abílio Pereira', 968574572,'base').
+estafeta(1, 'Abilio Pereira', 968574572,'base').
 estafeta(2, 'Maria Costa'   , 925876447,'naobase').
 estafeta(3, 'Sandra Silva'  , 957857458,'naobase').
 estafeta(4, 'Pedro Rocha'   , 923454374,'base').
 estafeta(5, 'Madalena Dias' , 934543456,'naobase').
 estafeta(6, 'Paulo Marques' , 923432312,'base').
-estafeta(7, 'António Soares', 964332124, 'naobase'). 
+estafeta(7, 'Antonio Soares', 964332124, 'naobase'). 

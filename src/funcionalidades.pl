@@ -114,19 +114,22 @@ conta_freguesias([Freg|T], Freg_, Count) :-
 % Q6 - calcular a classificação média de satisfação de cliente para um determinado estafeta 
 
 class_media(IdEstaf, Avg) :-
-    findall(IdEnc, encomendaGerida(IdEnc, _, _, _, _, _, IdEstaf, _, _), IdsEnc),
+    findall(IdEnc, encomendaGerida(IdEnc, _, _, _, _, _, _, IdEstaf, _), IdsEnc),
     map_id_to_nota(IdsEnc, Notas),
+    write('Lista '), write(Notas),nl,
     sum_list(Notas, Sum),
     length(Notas, Count),
+	write(Count),
     Count > 0,
     Avg is Sum / Count.
 
 map_id_to_nota([], []).
-map_id_to_nota([IdEnc|IdsEnc], [Nota|Notas]) :-
-    entrega(1, IdEnc, Nota),
+map_id_to_nota([IdEnc|IdsEnc], [N|Notas]) :-
+    findall(Nota,entrega(IdEnc, 1, Nota),[N|Notas]),
+    write(N),nl,
     map_id_to_nota(IdsEnc, Notas).
 map_id_to_nota([IdEnc|IdsEnc], Notas) :-
-    \+ entrega(1, IdEnc, _),
+    \+ findall(Nota,entrega(IdEnc, 1, Nota),Notas),
     map_id_to_nota(IdsEnc, Notas).
 
 %-------------------------------------------------------------
@@ -134,21 +137,21 @@ map_id_to_nota([IdEnc|IdsEnc], Notas) :-
 %      num determinado intervalo de tempo
 
 
-total_entregas_data_veiculo((MI,DI),(MF,DF),(B, M, C),Resultado) :-
-  setof(Veiculo, (encomendaGerida(_, _, _, _, _, (M,D), Veiculo, _, _) , entre((MI,DI),(M,D),(MF,DF))),Resultado),
-   % concatenar(H,Resultado),
-    write(Resultado).
-   %count_veiculos(Resultado,B,M,C).
-
-   
-
-%concatenar(Veiculo, [Veiculo|ListaVeiculosTotal]).
-
+  
+total_entregas_data_veiculo((MI,DI),(MF,DF),(B, M, C),ListaFinal) :-
+  write('entrie'),nl,
+  findall(Veiculo, (encomendaGerida(_, _, _, _, _, (M,D), Veiculo, _, _), entre((MI,DI),(M,D),(MF,DF))),ListaInicial),
+  reverse(ListaInicial,L2),
+  fix(L2,ListaFinal),
+  write(L2),
+  write(ListaFinal),
+  count_veiculos(ListaFinal,B,M,C).
+  
+  
+fix([H|T],T).
  
 count_veiculos([], 0, 0, 0).
 count_veiculos(['Bicicleta'|T], B, M, C) :- 
-    write('entrou'), nl,
-    write(B),
     count_veiculos(T,B_,M,C),
     B is B_+1.
     
@@ -159,7 +162,7 @@ count_veiculos(['Mota'|T], B, M, C) :-
     M is M_+1.
 
 
-count_veiculos(['Carro'], B, M, C) :-
+count_veiculos(['Carro'|T], B, M, C) :-
     write('entrou3'), nl,
     count_veiculos(T,B,M,C_),
     C is C_ + 1.
@@ -170,7 +173,7 @@ entre((M1, D1), (M,D), (M2, D2)) :-
     M1 =:= M,
     M =< M2,
     D1 =< D,
-    D2 =< D. 
+    D =< D2. 
 
 entre((M1, D1), (M,D), (M2, D2)) :-
     M =:= M2,
@@ -181,24 +184,43 @@ entre((M1, D1), (M,D), (M2, D2)) :-
 %-------------------------------------------------------------
 % Q8 - identificar o número total de entregas pelos estafetas, num determinado intervalo de tempo
 
-total_entregas_data(DataI, DataF, R) :-
-    %findall(IdEst, (encomendaGerida(_, _, _, _, _, Data, _, IdEst, _), datas_entre(DataI, Data, DataF)), ListaIds),
-    length(ListaIds, R).
+total_entregas_data((MI,DI), (MF,DF), R) :-
+    findall(IdEst,(encomendaGerida(_, _, _, _, _, (M,D), _,IdEst, _), entre((MI,DI), (M,D), (MF,DF))),ListaIds),
+    fix(ListaIds,X),
+    write(X),nl,
+    length(X, R).
 
 %-------------------------------------------------------------
 % Q9 - identificar o número total de entregas pelos estafetas, num determinado intervalo de tempo
 
-total_entregas(R1, R2) :-
-    findall(Id, entrega(0, Id, _), NotLista),
-    findall(Id, entrega(1, Id, _), YesLista),
-    length(NotLista, R1),
-    length(YesLista, R2).
+total_entregas((M1,D1),(M2,D2),(R1,R2)) :-
+    findall(IdEncomenda, (encomendaGerida(IdEncomenda, _, _, _, _, (M,D),_,_,_) ,entre((M1,D1),(M,D),(M2,D2))),Resultado),
+   	sort(Resultado,Resultado1),
+	write('Ids '), write(Resultado1),nl,
+        ler_encomenda(Resultado1,Flags),
+	write('Lista '), write(Flags),
+	count_entregas1(Flags,R1), 
+	R2 is 0,
+        write(R1), nl,
+	write(R2), nl.
 
+
+ler_encomenda([],_).
+ler_encomenda([Id|Ids],[Flag2|Final]) :- 
+   write(Id), nl,
+   findall(Flag,entrega(Id,Flag,_),[Flag2|Tail]), 
+   write(Flag2),nl,
+   ler_encomenda(Ids,Final).
+
+
+count_entregas1(Flags,R1):-
+findall(0,Flags,Lista0),
+R1 is length(Lista0).
 %-------------------------------------------------------------
 % Q10 - calcular o peso total transportado por estafeta num determinado dia
 
-peso_transportado(Dia, Total) :-
-    findall(Peso, encomendaGerida(_, Peso, _, _, _, _, _, Dia, _), ListaPesos),
+peso_transportado((M,D), Total) :-
+    findall(Peso, encomendaGerida(_, Peso, _, _, _, (M,D), _, _, _), ListaPesos),
     sum_list(ListaPesos, Total).
 
 

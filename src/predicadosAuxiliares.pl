@@ -72,6 +72,9 @@ update_estafeta(IdEstaf) :-
     retract(estafeta(IdEstaf, Nome, C, 'naobase')),
     assert(estafeta(IdEstaf, Nome, C, 'base')).
 
+somatorio([Elemento], Elemento).
+somatorio([E1,E2| Tail], Total) :-
+    somatorio([E1+E2|Tail], Total).
 
 entregas_popular :-
     findall(Id,encomenda(Id, _, _, _, _, _), Lista),
@@ -80,5 +83,5 @@ entregas_popular :-
 
 assert_auxiliar([]).
 assert_auxiliar([H|T]) :-  
-	assert(entrega(0,H,0)),
+	assert(entrega(H,0,0)),
 	assert_auxiliar(T).
