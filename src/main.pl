@@ -35,6 +35,7 @@ main :-
 action_for(X) :- 
 	write('Action for '), 
 	write(X), nl.
+
 %Funcionalidades
 
 action_for(1) :-
@@ -42,28 +43,38 @@ action_for(1) :-
     write('Estafeta mais ecológico: '),
     write(Id), nl.
 
+auxiliar_number([],[]).
 auxiliar_number([H|T],[H1|T1]) :- 
-	number_codes(H1,H)
+	atom_number(H,H1),
+	write(H1), nl,
 	auxiliar_number(T,T1).
+
+
+
 
 
 action_for(2) :-
     write('Insira encomendas separadas por virgula: '),
     read(Str),nl,
     split_string(Str, ",", "\n ", Lista),
-    auxiliar_number(Lista,R),
-
+    auxiliar_number(Lista,ListaAtomos),
+   
     write('Insira cliente: '),
     read(Id),nl,
-    number_codes(Id,IdCliente),
-    quem_entregou(R, IdCliente, Resposta),
-    write(Resposta), nl.
+
+    quem_entregou(ListaAtomos, Id,ListaEstafetas),
+    write('Resposta : '), write(ListaEstafetas),nl.
+ 
+   
+
 
 action_for(3) :-
     write('Inserir estafeta: '),
-    read(Id),nl,
-    quem_recebeu(Id, IdsCli),
-    write(IdsCli), nl.
+    read(IdEstafeta),nl,
+    write('Estafeta : '), write(IdEstafeta), nl,
+    quem_recebeu(IdEstafeta,IdsCli),
+    sort(IdsCli,IdsClientes),
+    write('Resposta : '), write(IdsClientes), nl.
 
 action_for(4) :-
     write('Insira o mes (2 digitos)'),
