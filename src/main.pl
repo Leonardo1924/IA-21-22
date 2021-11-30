@@ -81,7 +81,9 @@ action_for(4) :-
     read(M),nl,
     write('Insira o dia (2 digitos)'),
     read(D),nl,
-    faturado((M,D), Total),
+ 
+    faturado((M,D),Total),
+    write('Valor Faturado :'),
     write(Total), nl.
 
 action_for(5) :-
@@ -96,17 +98,19 @@ action_for(6) :-
 
 action_for(7) :-
     write('Insira o 1o mes (2 digitos)'),
-    read(M1),nl,
+    read(MI),nl,
     write('Insira o 1o dia (2 digitos)'),
-    read(D1),nl,
-    write('Insira o 2o mês (2 digitos)'),
-    read(M2),nl,
+    read(DI),nl,
+    write('Insira o 2o mes (2 digitos)'),
+    read(MF),nl,
     write('Insira o 2o dia (2 digitos)'),
-    read(D2),nl,
-    total_entregas_data_veiculo((M1,D1), (M2,D2), (B,M,C)),
-    write('Bicicletas: '), write(B), nl,
-    write('Motas: '), write(M), nl,
-    write('Carros: '), write(C), nl.
+    read(DF),nl,
+    total_entregas_data_veiculo((MI,DI),(MF,DF),(B,M,C),Lista).
+   % write('Lista :'), write(Lista).
+
+  %  write('Bicicletas: '), write(B), nl,
+   % write('Motas: '), write(M), nl,
+    %write('Carros: '), write(C), nl.
 
 action_for(8) :-
     write('Insira o 1o mês (2 digitos)'),
@@ -117,8 +121,10 @@ action_for(8) :-
     read(M2),nl,
     write('Insira o 2o dia (2 digitos)'),
     read(D2),nl,
-    total_entregas_data((M1,D1), (M2,D2), R),
-    write(R), nl.
+ %   total_entregas_data((M1,D1), (M2,D2), (B,M,C)),
+    write('Bicicletas : '), write(B), nl,
+    write('Motas : '), write(M), nl,
+    write('Carros : '), write(C), nl.
 
 action_for(9) :-
     total_entregas(R1, R2),
