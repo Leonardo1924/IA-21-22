@@ -52,19 +52,23 @@ conta_veiculos(['Carro'|T], Sum, Count) :-
 %------------------------------------------------
 % Q2 - identificar que estafetas entregaram determinada(s) encomenda(s) a um determinado cliente
 
-quem_entregou([], _, _).
-quem_entregou([IdEnc|IdsEnc], IdCli,[IdEstaf|R]) :-
-    findall(IdEstaf, encomendaGerida(IdEnc, _, _, _, IdCli, _, _, IdEstaf, _),ListaIdEstaf),
-    write(ListaIdEstaf),
-    quem_entregou(IdsEnc, IdCli, R).
+quem_entregou([], _, []).
+quem_entregou([IdEnc|IdsEnc], IdCli,[H|R]) :-
+     write('Cliente : ') , write(IdCli), nl,
+     write('Encomenda: '), write(IdEnc), nl, 
+     bagof(IdEstaf, encomendaGerida(IdEnc, _, _, _, IdCli, _, _,IdEstaf, _),[H|ListaIdEstaf]),
+     write('Estafeta :'), write(H),nl,
+     quem_entregou(IdsEnc, IdCli, R).
 
    
 
 %------------------------------------------------
 % Q3 - identificar os clientes servidos por um determinado estafeta
 
-quem_recebeu(IdEstaf, IdsCli) :-
-    findall(IdCli, encomendaGerida(_, _, _, _, IdCli, _, IdEstaf,_,_), IdsCli).
+quem_recebeu(IdEstaf, [IdCli|IdsCli]) :-
+    bagof(IdCli,encomendaGerida(_, _, _, _, IdCli, _, _,IdEstaf,_), IdsCli),
+    write(IdCli).
+
 
 %------------------------------------------------
 % Q4 - calcular o valor faturado pela Green Distribution num determinado dia
