@@ -197,33 +197,38 @@ total_entregas((M1,D1),(M2,D2),(R1,R2)) :-
     findall(IdEncomenda, (encomendaGerida(IdEncomenda, _, _, _, _, (M,D),_,_,_) ,entre((M1,D1),(M,D),(M2,D2))),Resultado),
    	sort(Resultado,Resultado1),
 	write('Ids '), write(Resultado1),nl,
-        ler_encomenda(Resultado1,Resultado2),
-	write('Lista '), write(Resultado2),
-	%list_sum(Flags,R1), 
-	%R2 is 0,
-         write('Zeros '),write(R1), nl,
-	%write(R2), nl.
+    ler_encomenda(Resultado1,Flags),
+	write('Lista '), write(Flags),
+    conta_entregas(Flags,R1,R2),
+    write(R1), nl,
+	write(R2), nl.
 
 
 ler_encomenda([],[]).
-ler_encomenda([Id|Ids],[H|Result]) :- 
-   write(Id),nl,
-   findall(Flag,entrega(Id,Flag,_),[H|List]), 
-   write('Flag '), write(H),nl,
-   ler_encomenda(Ids,Result).
+ler_encomenda([Id|Ids],[Flag2|Final]) :- 
+   write(Id), nl,
+   findall(Flag,entrega(Id,Flag,_),[Flag2|Tail]), 
+   write(Flag2),nl,
+   ler_encomenda(Ids,Final).
 
 
- 
-list_sum([], 0).
-list_sum([0 | Tail], TotalSum) :-
-    list_sum(Tail, Sum1),
-    Total = 1 + Sum1.
+conta_entregas([],0,0).
+conta_entregas([0|T], Count0, Count1) :-
+    conta_entregas(T,Count0_, Count1),
+    Count0 is Count0_ + 1.
+
+conta_entregas([1|T],Count0, Count1) :-
+    conta_entregas(T,Count0, Count1_),
+    Count1 is Count1_ + 1.
+
+conta_entregas([X|T], Count0, Count1) :- 
+    X \= 1, 
+    X\= 0, 
+    conta_entregas(T, Count0, Count1).
+
 %-------------------------------------------------------------
 % Q10 - calcular o peso total transportado por estafeta num determinado dia
 
 peso_transportado((M,D), Total) :-
     findall(Peso, encomendaGerida(_, Peso, _, _, _, (M,D), _, _, _), ListaPesos),
     sum_list(ListaPesos, Total).
-
-
-
