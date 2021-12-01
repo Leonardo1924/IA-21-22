@@ -14,20 +14,23 @@
 
 mais_ecologico(IdR) :-
     findall(Id, estafeta(Id, _, _, _), LIds),
-    mais_ecologico_aux(LIds, -1, IdR).
+    mais_ecologico_aux(LIds, A, IdR).
  
-mais_ecologico_aux([], _, null). %lista vazia? []
-mais_ecologico_aux([Id], _, Id).
+mais_ecologico_aux([], -1, null). %lista vazia? []
+mais_ecologico_aux([Id|Ids], Avg, IdR) :-
+    findall(Veiculo, encomendaGerida(_, _, _, _, _, _, Veiculo, Id, _), ListaVeiculos),
+    conta_veiculos(ListaVeiculos, Sum, Count),
+    Count == 0,
+    mais_ecologico_aux(Ids, Avg, IdR).
 mais_ecologico_aux([Id|Ids], Avg, Id) :-
-    findall(Veiculo, encomendaGerida(_, _, _, _, _, Veiculo, Id,_,_), ListaVeiculos),
+    findall(Veiculo, encomendaGerida(_, _, _, _, _, _, Veiculo, Id, _), ListaVeiculos),
     conta_veiculos(ListaVeiculos, Sum, Count),
     Count \= 0,
     mais_ecologico_aux(Ids, Avg_, _),
     Avg is Sum / Count,
     Avg > Avg_.
 mais_ecologico_aux([Id|Ids], Avg_, Id_) :-
-    findall(Veiculo, encomendaGerida(_, _, _, _, _, Veiculo, Id,_,_), ListaVeiculos),
-    write(ListaVeiculos),
+    findall(Veiculo, encomendaGerida(_, _, _, _, _, _, Veiculo, Id, _), ListaVeiculos),
     conta_veiculos(ListaVeiculos, Sum, Count),
     Count \= 0,
     mais_ecologico_aux(Ids, Avg_, Id_),
