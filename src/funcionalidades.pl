@@ -129,7 +129,7 @@ map_id_to_nota([IdEnc|IdsEnc], [N|Notas]) :-
     write(N),nl,
     map_id_to_nota(IdsEnc, Notas).
 map_id_to_nota([IdEnc|IdsEnc], Notas) :-
-    \+ findall(Nota,entrega(IdEnc, 1, Nota),Notas),
+    findall(Nota, entrega(IdEnc, 1, Nota), []),
     map_id_to_nota(IdsEnc, Notas).
 
 %-------------------------------------------------------------
