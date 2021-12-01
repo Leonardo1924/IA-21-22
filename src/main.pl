@@ -155,7 +155,7 @@ action_for(11) :-
 action_for(12) :-
     write('Inserir o seu id: '), nl,
     read(Id),
-    update_entrega(Id).
+    update_estafeta(Id).
 
 action_for(13) :-
     write('Insira a encomenda a classificar: '),
