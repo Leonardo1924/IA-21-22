@@ -194,7 +194,7 @@ total_entregas_data((MI,DI), (MF,DF), R) :-
     length(X, R).
 
 %-------------------------------------------------------------
-% Q9 - identificar o número total de entregas pelos estafetas, num determinado intervalo de tempo
+% Q9 - calcular o número de encomendas entregues e não entregues pela Green Distribution, num determinado período de tempo
 
 total_entregas((M1,D1),(M2,D2),(R1,R2)) :-
     findall(IdEncomenda, (encomendaGerida(IdEncomenda, _, _, _, _, (M,D),_,_,_) ,entre((M1,D1),(M,D),(M2,D2))),Resultado),
