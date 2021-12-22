@@ -23,6 +23,7 @@ main :-
     write('|                 11. Selecionar que encomenda foi entregue                                    |'), nl,
     write('|                 12. Indicar chegada a empresa                                                |'), nl,
     write('|                 13. Classificar entrega                                                      |'), nl,
+    write('|                 14. Gerir as entregas                                                        |'), nl,
     write('|                 0. Exit                                                                      |'), nl,
     write('------------------------------------------------------------------------------------------------'), nl,nl,
     write('Choose '),
@@ -105,39 +106,31 @@ action_for(7) :-
     read(MF),nl,
     write('Insira o 2o dia (2 digitos)'),
     read(DF),nl,
-    total_entregas_data_veiculo((MI,DI),(MF,DF),(B,M,C),Lista),
+    total_entregas_data_veiculo((MI,DI),(MF,DF),(B,M,C),Lista).
    % write('Lista :'), write(Lista).
 
-    write('Bicicletas: '), write(B), nl,
-    write('Motas: '), write(M), nl,
-    write('Carros: '), write(C), nl.
+  %  write('Bicicletas: '), write(B), nl,
+   % write('Motas: '), write(M), nl,
+    %write('Carros: '), write(C), nl.
 
 action_for(8) :-
-    write('Insira o 1o mes'),
+    write('Insira o 1o mês (2 digitos)'),
     read(M1),nl,
-    write('Insira o 1o dia'),
+    write('Insira o 1o dia (2 digitos)'),
     read(D1),nl,
-    write('Insira o 2o mes'),
+    write('Insira o 2o mês (2 digitos)'),
     read(M2),nl,
-    write('Insira o 2o dia'),
+    write('Insira o 2o dia (2 digitos)'),
     read(D2),nl,
-    total_entregas_data((M1,D1), (M2,D2), R),
-    write(R).
-
+ %   total_entregas_data((M1,D1), (M2,D2), (B,M,C)),
+    write('Bicicletas : '), write(B), nl,
+    write('Motas : '), write(M), nl,
+    write('Carros : '), write(C), nl.
 
 action_for(9) :-
-   
-    write('Insira o 1o mes'),
-    read(M1),nl,
-    write('Insira o 1o dia'),
-    read(D1),nl,
-    write('Insira o 2o mes'),
-    read(M2),nl,
-    write('Insira o 2o dia'),
-    read(D2),nl,
-    total_entregas((M1,D1),(M2,D2),(R1,R2)).
-   % write('Nao entregues: '), write(R1), nl,
-   % write('Entregues: '), write(R2), nl.
+    total_entregas(R1, R2),
+    write('Nao entregues: '), write(R1), nl,
+    write('Entregues: '), write(R2), nl.
 
 action_for(10) :-
     write('Insira o mes (2 digitos)'),
@@ -155,7 +148,7 @@ action_for(11) :-
 action_for(12) :-
     write('Inserir o seu id: '), nl,
     read(Id),
-    update_estafeta(Id).
+    update_entrega(Id).
 
 action_for(13) :-
     write('Insira a encomenda a classificar: '),
@@ -165,3 +158,15 @@ action_for(13) :-
     classificar_entrega(Id, Nota),
     findall(Nota,entrega(_,_,Nota),Notas),
     write(Notas).
+
+action_for(14) :-
+    write('----------------------------------------Procuras------------------------------------------'), nl, 
+    write('|                             1. DFs                                                      |'), nl,
+    write('|                             2. BFs                                                      |'), nl,
+    write('|                             3. Busca Limitada em Profundidade                           |'), nl,
+    write('|                             4. Gulosa                                                   |'), nl,
+    write('|                             5. A*                                                       |'), nl,
+    write('------------------------------------------------------------------------------------------'), nl,
+    read(Flag),
+    calculaDistancias(Flag,Freguesias,Custos)
+    

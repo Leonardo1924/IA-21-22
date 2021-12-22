@@ -2,6 +2,8 @@
 :-style_check(-singleton).
 :-style_check(-discontiguous).
 
+:-include('procurasGrafos.pl').
+
 encontraEstafetaLivre(IdEstafeta) :-
     estafeta(IdEstafeta, _, _, 'base').
 
@@ -72,9 +74,6 @@ update_estafeta(IdEstaf) :-
     retract(estafeta(IdEstaf, Nome, C, 'naobase')),
     assert(estafeta(IdEstaf, Nome, C, 'base')).
 
-somatorio([Elemento], Elemento).
-somatorio([E1,E2| Tail], Total) :-
-    somatorio([E1+E2|Tail], Total).
 
 entregas_popular :-
     findall(Id,encomenda(Id, _, _, _, _, _), Lista),
@@ -83,5 +82,42 @@ entregas_popular :-
 
 assert_auxiliar([]).
 assert_auxiliar([H|T]) :-  
-	assert(entrega(H,0,0)),
+	assert(entrega(0,H,0)),
 	assert_auxiliar(T).
+
+percorreEncomendas(Ids,Pesos,Prazos,Velocidades,Freguesias,Distancias) :-
+    findall(Id,encomenda(Id, _, _, _, _, _, _, _, _,), Ids),
+    findall(Peso, encomenda(_, Peso, _, _, _, _, _, _, _,), Pesos),
+    findall(Prazo, encomenda(_, _, _, Prazo, _, _, _, _,), Prazos),
+    findall(IdCliente ( _, _, _, _, _, IdCliente, IdClientes),
+    procuraFreguesia(IdClientes,Freguesias),
+    calculaVelocidade(Pesos, Velocidades),
+    calculaDistancias(Flag,Freguesias,Custos).
+
+
+calculaVelocidade([], _).
+calculaVelocidade([P|Pesos], [Vel|Velocidades]) :-
+    P < 6 -> Vel is 10 - 0,7*P;
+    P < 21, P>=6 -> Vel is 35-0,5*P;
+    P >= 21, P <101 -> Vel is 25-0,1*P,
+    calculaVelocidade(Pesos,[Vel|Velocidades]).
+
+procuraFreguesia([],_).
+procuraFreguesia([IdC|IdClientes], [F|Freguesias]) :-
+    findall(F, findall(Id,_,_,_,_,F,_),Freg),
+    procuraFreguesia(IdClientes,[F|Freguesias]).
+
+
+calculaDistancias('1',[F|Freguesias],[Custo|Custos]) :-
+    dfs('Maximinos',F,Cam,Custo),
+    calculaDistancias('1',Freguesias,[Custo|Custos]).
+
+calculaDistancias('2',[F|Freguesias],[Custo|Custos]) :-
+     bfs('Maximinos',F,Cam,Custo),
+     calculaDistancias('2',Freguesias,[Custo|Custos]).
+
+calculaDistancias('3',[F|Freguesias],[Custo|Custos]) :-
+        dfs('Maximinos',F,Cam,Custo),
+        calculaDistancias('1',Freguesias,[Custo|Custos]).
+    
+
