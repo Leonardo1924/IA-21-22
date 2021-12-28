@@ -34,3 +34,34 @@ estafeta(4, 'Pedro Rocha'   , 923454374,'base').
 estafeta(5, 'Madalena Dias' , 934543456,'naobase').
 estafeta(6, 'Paulo Marques' , 923432312,'base').
 estafeta(7, 'Antonio Soares', 964332124, 'naobase'). 
+
+%freguesias(FreguesiaInicial, FreguesiaFinal, Distancia)
+freguesias( grafo(['Adaufe','Maximinos','Sao Pedro','Palmeira','Real','Nogueira','Sao Vitor','Sao Lazaro','Ferreiros', 'Frossos', 'Gualtar','Nogueiro','Sao Vicente','Navarra'],
+    [aresta('Adaufe', 'Gualtar', 8),
+     aresta('Adaufe', 'Palmeira', 12),
+     aresta('Adaufe','Sao Vitor', 7),
+     aresta('Adaufe', 'Sao Vicente', 7),
+     aresta('Adaufe', 'Navarra', 10),
+     aresta('Maximinos', 'Sao Lazaro', 6),
+     aresta('Maximinos','Ferreiros', 7),
+     aresta('Maximinos', 'Real', 11),
+     aresta('Maximinos','Sao Vicente', 3), 
+     aresta('Sao Pedro', 'Gualtar', 12),
+     aresta('Sao Pedro','Nogueiro', 10),
+     aresta('Sao Pedro','Navarra', 11),
+     aresta('Palmeira','Real', 14),
+     aresta('Palmeira','Frossos', 8),
+     aresta('Palmeira','Sao Vicente', 8),
+     aresta('Real','Sao Vicente', 10),
+     aresta('Real','Frossos', 13),
+     aresta('Real','Ferreiros', 9),
+     aresta('Nogueira','Sao Lazaro', 6),
+     aresta('Nogueira','Sao Vitor', 8),
+     aresta('Nogueira','Nogueiro', 6),
+     aresta('Sao Vitor','Gualtar', 7),
+     aresta('Sao Vitor','Sao Lazaro', 3),
+     aresta('Sao Vitor','Sao Vicente', 4),
+     aresta('Sao Vitor','Nogueiro', 8),
+     aresta('Sao Lazaro','Sao Vicente', 6),
+     aresta('Gualtar','Nogueiro', 4),])).
+     
