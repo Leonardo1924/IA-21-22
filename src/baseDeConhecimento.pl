@@ -9,14 +9,14 @@
 
 %--------------Clientes--------------
 %cliente(id de cliente, nome, NIF, rua, porta, freguesia, telemovel)
-cliente(1,'Jose Andrade'      ,123469696,'Rua dos Rios','2','svitor',969798321).
-cliente(2,'Rafael Pereira'    ,123456789,'Rua dos Sinos','5','svicente',966969698).
-cliente(3,'Maria Silva'       ,987654321,'Rua das Teclas','8','celeiros',969798231).
-cliente(4,'Rui Lopes'         ,123789400,'Rua da Universidade','12','gualtar',929395961).
-cliente(5,'Ana Ferreira'      ,134567890,'Rua do Mato','7','nogueira',912442421).
-cliente(6,'Pedro Teixeira'    ,023462327,'Rua do Exercito','2','svitor',961123501).
-cliente(7,'Henrique Oliveira' ,123469696,'Avenida do Carmo','2','gualtar',934338321).
-cliente(8,'Leonardo Henriques',255225571,'Avenida da Trindade','2','svitor',969215121).
+cliente(1,'Jose Andrade'      ,123469696,'Rua dos Rios','2','Sao Vitor',969798321).
+cliente(2,'Rafael Pereira'    ,123456789,'Rua dos Sinos','5','Sao Vicente',966969698).
+cliente(3,'Maria Silva'       ,987654321,'Rua das Teclas','8','Ferreiros',969798231).
+cliente(4,'Rui Lopes'         ,123789400,'Rua da Universidade','12','Gualtar',929395961).
+cliente(5,'Ana Ferreira'      ,134567890,'Rua do Mato','7','Nogueiro',912442421).
+cliente(6,'Pedro Teixeira'    ,023462327,'Rua do Exercito','2','Sao Vitor',961123501).
+cliente(7,'Henrique Oliveira' ,123469696,'Avenida do Carmo','2','Gualtar',934338321).
+cliente(8,'Leonardo Henriques',255225571,'Avenida da Trindade','2','Sao Vitor',969215121).
 
 %---------Encomendas---------------
 %encomenda(id de encomenda, peso, volume, prazo, idCliente, dataInicial)
@@ -64,3 +64,20 @@ freguesias( grafo(['Adaufe','Maximinos','Sao Pedro','Palmeira','Real','Nogueira'
      aresta('Sao Vitor','Nogueiro', 8),
      aresta('Sao Lazaro','Sao Vicente', 6),
      aresta('Gualtar','Nogueiro', 4)])).
+
+% node(nodo, estimativaCusto).
+
+node('Maximinos', 0).
+node('Real', 11).
+node('Ferreiros', 7).
+node('Frossos', 19).
+node('Palmeira', 11).
+node('Sao Vicente', 3).
+node('Sao Lazaro', 6).
+node('Adaufe', 10).
+node('Sao Vitor', 7).
+node('Nogueira', 12).
+node('Nogueiro', 15).
+node('Gualtar', 14).
+node('Navarra', 20).
+node('Sao Pedro', 25).

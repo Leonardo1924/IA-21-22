@@ -51,11 +51,11 @@ menorCustoAux([H|T], CustoAprox, NodeCloser, X):-
 
 gulosa(Inicio, Path, Cost):- gulosaAux(Inicio, [], 0, Path, Cost).
 
-gulosaAux(t, Visited, Cost, Path, Cost):- reverse([t|Visited], Path).
+gulosaAux('Maximinos', Visited, Cost, Path, Cost):- reverse(['Maximinos'|Visited], Path).
 gulosaAux(Node, Visited, Cost, Path, Total):-
     listaDeAdjacentes(Node, ListAdj),
 	menorCustoGreedy(ListAdj, NextNode),
-	not(member(NextNode, Visited)),
+	\+ member(NextNode, Visited),
 	adjacente(Node, NextNode, Value),
 	NewCost is Cost + Value,
 	gulosaAux(NextNode, [Node|Visited], NewCost, Path, Total).
