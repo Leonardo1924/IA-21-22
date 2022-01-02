@@ -19,7 +19,7 @@ cliente(7,'Henrique Oliveira' ,123469696,'Avenida do Carmo','2','gualtar',934338
 cliente(8,'Leonardo Henriques',255225571,'Avenida da Trindade','2','svitor',969215121).
 
 %---------Encomendas---------------
-%encomenda(id de encomenda, peso, volume, prazo, idCliente, dataInicial) 
+%encomenda(id de encomenda, peso, volume, prazo, idCliente, dataInicial)
 %prazo: 0 -> imediato; 24 -> 1 dia
 encomenda(1,70,20,0,2,(01,01)).
 encomenda(2,15,10,2,2,(01,02)).
@@ -33,7 +33,7 @@ estafeta(3, 'Sandra Silva'  , 957857458,'naobase').
 estafeta(4, 'Pedro Rocha'   , 923454374,'base').
 estafeta(5, 'Madalena Dias' , 934543456,'naobase').
 estafeta(6, 'Paulo Marques' , 923432312,'base').
-estafeta(7, 'Antonio Soares', 964332124, 'naobase'). 
+estafeta(7, 'Antonio Soares', 964332124, 'naobase').
 
 %freguesias(FreguesiaInicial, FreguesiaFinal, Distancia)
 freguesias( grafo(['Adaufe','Maximinos','Sao Pedro','Palmeira','Real','Nogueira','Sao Vitor','Sao Lazaro','Ferreiros', 'Frossos', 'Gualtar','Nogueiro','Sao Vicente','Navarra'],
@@ -45,7 +45,7 @@ freguesias( grafo(['Adaufe','Maximinos','Sao Pedro','Palmeira','Real','Nogueira'
      aresta('Maximinos', 'Sao Lazaro', 6),
      aresta('Maximinos','Ferreiros', 7),
      aresta('Maximinos', 'Real', 11),
-     aresta('Maximinos','Sao Vicente', 3), 
+     aresta('Maximinos','Sao Vicente', 3),
      aresta('Sao Pedro', 'Gualtar', 12),
      aresta('Sao Pedro','Nogueiro', 10),
      aresta('Sao Pedro','Navarra', 11),
@@ -63,5 +63,4 @@ freguesias( grafo(['Adaufe','Maximinos','Sao Pedro','Palmeira','Real','Nogueira'
      aresta('Sao Vitor','Sao Vicente', 4),
      aresta('Sao Vitor','Nogueiro', 8),
      aresta('Sao Lazaro','Sao Vicente', 6),
-     aresta('Gualtar','Nogueiro', 4),])).
-     
+     aresta('Gualtar','Nogueiro', 4)])).
