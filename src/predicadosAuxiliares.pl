@@ -1,9 +1,9 @@
 
 :-style_check(-singleton).
 :-style_check(-discontiguous).
-
+        
 :-include('procurasGrafos.pl').
-
+  
 encontraEstafetaLivre(IdEstafeta) :-
     estafeta(IdEstafeta, _, _, 'base').
 
@@ -94,30 +94,39 @@ percorreEncomendas(Ids,Pesos,Prazos,Velocidades,Freguesias,Distancias) :-
     calculaVelocidade(Pesos, Velocidades),
     calculaDistancias(Flag,Freguesias,Custos).
 
-
-calculaVelocidade([], _).
+calculaStar([], [], [], []).
+calculaStar([Id|Ids], [V|Velocidades], [D|Distancias], [S|Stars]) :-
+    encomenda(Id, _, _, Prazo, _, _, _, _,),
+    V > 0,
+    Tempo is D / V,
+    Tempo < Prazo + 1 -> S is 5;
+    Tempo >= Prazo + 1, Tempo < Prazo + 3 -> S is 4;
+    Tempo >= Prazo + 3, Tempo < Prazo + 24 -> S is 3;
+    Tempo >= Prazo + 24, Tempo < Prazo + 48 -> S is 2;
+    Tempo >= Prazo + 48, Tempo < Prazo + 72 -> S is 1,
+    calculaStar(Ids, Velocidades, Distancias, Stars).
+    
+calculaVelocidade([], []).
 calculaVelocidade([P|Pesos], [Vel|Velocidades]) :-
     P < 6 -> Vel is 10 - 0,7*P;
     P < 21, P>=6 -> Vel is 35-0,5*P;
     P >= 21, P <101 -> Vel is 25-0,1*P,
-    calculaVelocidade(Pesos,[Vel|Velocidades]).
+    calculaVelocidade(Pesos, Velocidades).
 
-procuraFreguesia([],_).
+procuraFreguesia([], []).
 procuraFreguesia([IdC|IdClientes], [F|Freguesias]) :-
     findall(F, findall(Id,_,_,_,_,F,_),Freg),
-    procuraFreguesia(IdClientes,[F|Freguesias]).
+    procuraFreguesia(IdClientes, Freguesias).
 
-
+calculaDistancias(_, [], []).
 calculaDistancias('1',[F|Freguesias],[Custo|Custos]) :-
     dfs('Maximinos',F,Cam,Custo),
-    calculaDistancias('1',Freguesias,[Custo|Custos]).
-
+    calculaDistancias('1',Freguesias, Custos).
 calculaDistancias('2',[F|Freguesias],[Custo|Custos]) :-
      bfs('Maximinos',F,Cam,Custo),
-     calculaDistancias('2',Freguesias,[Custo|Custos]).
-
+     calculaDistancias('2',Freguesias, Custos).
 calculaDistancias('3',[F|Freguesias],[Custo|Custos]) :-
-        dfs('Maximinos',F,Cam,Custo),
-        calculaDistancias('1',Freguesias,[Custo|Custos]).
+    dfs('Maximinos',F,Cam,Custo),
+    calculaDistancias('1',Freguesias, Custos).
     
 
