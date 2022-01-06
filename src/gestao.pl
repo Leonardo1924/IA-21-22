@@ -22,7 +22,6 @@ classificar_entrega(Id, Nota) :-
 
 
 gerir:-
-    write('entrei no gerir'),
     entregas_popular,
     auxiliarId(Ids),
     auxiliarPeso(Pesos),
@@ -33,7 +32,4 @@ gerir:-
     listaVeiculos(Pesos, Veiculos),
     listaEstafetas(Ids,Estafs),
     listaPrecos(Veiculos, Prazos, Precos),
-    write(Estafs), nl,
-    write(Prazos),nl, write(Vols), nl, write(Datas),nl, write(Clientes), nl, write(Precos), nl,
-    gerirEncomendas(Ids, Pesos, Vols, Prazos, Clientes, Datas, Veiculos, Estafs, Precos), 
-    write('sai do gerir').
+    gerirEncomendas(Ids, Pesos, Vols, Prazos, Clientes, Datas, Veiculos, Estafs, Precos).

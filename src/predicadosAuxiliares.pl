@@ -74,7 +74,11 @@ update_entrega([Id|Ids], [S|Stars]) :-
 
 update_estafeta(IdEstaf) :-
     retract(estafeta(IdEstaf, Nome, C, 'naobase')),
-    assert(estafeta(IdEstaf, Nome, C, 'base')).
+    assert(estafeta(IdEstaf, Nome, C, 'base')),
+    setof(Id,encomendaGerida(Id, Peso, Vol, Prazo, Cliente, Data, Veiculo, '0', Preco), IdEncomenda),
+    retract(encomendaGerida(Id, _, _, _, _, _, _, _, _)),
+    assert(encomendaGerida(Id, Peso, Vol, Prazo, Cliente, Data, Veiculo, IdEstaf, Preco)).
+ 
 
 
 entregas_popular :-
@@ -87,18 +91,18 @@ assert_auxiliar([H|T]) :-
 	assert(entrega(0,H,0)),
 	assert_auxiliar(T).
 
-percorreEncomendas(Ids,Pesos,Prazos,Velocidades,Freguesias,Distancias) :-
-    findall(Id,encomenda(Id, _, _, _, _, _, _, _, _,), Ids),
-    findall(Peso, encomenda(_, Peso, _, _, _, _, _, _, _,), Pesos),
-    findall(Prazo, encomenda(_, _, _, Prazo, _, _, _, _,), Prazos),
-    findall(IdCliente ( _, _, _, _, _, IdCliente, IdClientes),
+percorreEncomendas(Ids,Pesos,Prazos,Velocidades,Freguesias,Distancias,Flag,Freguesias,Custos) :-
+    findall(Id, encomendaGerida(Id, _, _, _, _, _, _, IdEstaf, _),entrega(0, Id,_), IdEstaf > 0, Ids),
+    findall(Peso, encomendaGerida(Id, Peso, _, _, _, _, _, IdEstaf, _),entrega(0, Id,_),IdEstaf > 0, Pesos),
+    findall(Prazo, encomendaGerida(Id, _, _, Prazo, _, _, IdEstaf, _),entrega(0, Id,_),IdEstaf > 0, Prazos),
+    findall(IdCliente, encomendaGerida(Id, _, _, _, _, IdCliente, _, IdEstaf ,_),entrega(0, Id,_),IdEstaf > 0, IdClientes),   
     procuraFreguesia(IdClientes,Freguesias),
     calculaVelocidade(Pesos, Velocidades),
     calculaDistancias(Flag,Freguesias,Custos).
 
 calculaStar([], [], [], []).
 calculaStar([Id|Ids], [V|Velocidades], [D|Distancias], [S|Stars]) :-
-    encomenda(Id, _, _, Prazo, _, _, _, _,),
+    encomenda(Id, _, _, Prazo, _, _, _, _),
     V > 0,
     Tempo is D / V,
     Tempo < Prazo + 2 -> S is 5;

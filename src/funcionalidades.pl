@@ -142,7 +142,6 @@ map_id_to_nota([IdEnc|IdsEnc], Notas) :-
 
   
 total_entregas_data_veiculo((MI,DI),(MF,DF),(B, M, C),ListaFinal) :-
-  write('entrie'),nl,
   findall(Veiculo, (encomendaGerida(_, _, _, _, _, (M,D), Veiculo, _, _), entre((MI,DI),(M,D),(MF,DF))),ListaInicial),
   reverse(ListaInicial,L2),
   fix(L2,ListaFinal),
@@ -160,13 +159,11 @@ count_veiculos(['Bicicleta'|T], B, M, C) :-
     
 
 count_veiculos(['Mota'|T], B, M, C) :-
-    write('entrou2'), nl,
     count_veiculos(T,B,M_,C),
     M is M_+1.
 
 
 count_veiculos(['Carro'|T], B, M, C) :-
-    write('entrou3'), nl,
     count_veiculos(T,B,M,C_),
     C is C_ + 1.
 
@@ -190,7 +187,6 @@ entre((M1, D1), (M,D), (M2, D2)) :-
 total_entregas_data((MI,DI), (MF,DF), R) :-
     findall(IdEst,(encomendaGerida(_, _, _, _, _, (M,D), _,IdEst, _), entre((MI,DI), (M,D), (MF,DF))),ListaIds),
     fix(ListaIds,X),
-    write(X),nl,
     length(X, R).
 
 %-------------------------------------------------------------
@@ -199,19 +195,13 @@ total_entregas_data((MI,DI), (MF,DF), R) :-
 total_entregas((M1,D1),(M2,D2),(R1,R2)) :-
     findall(IdEncomenda, (encomendaGerida(IdEncomenda, _, _, _, _, (M,D),_,_,_) ,entre((M1,D1),(M,D),(M2,D2))),Resultado),
    	sort(Resultado,Resultado1),
-	write('Ids '), write(Resultado1),nl,
     ler_encomenda(Resultado1,Flags),
-	write('Lista '), write(Flags),
-    conta_entregas(Flags,R1,R2),
-    write(R1), nl,
-	write(R2), nl.
+    conta_entregas(Flags,R1,R2).
 
 
 ler_encomenda([],[]).
 ler_encomenda([Id|Ids],[Flag2|Final]) :- 
-   write(Id), nl,
    findall(Flag,entrega(Id,Flag,_),[Flag2|Tail]), 
-   write(Flag2),nl,
    ler_encomenda(Ids,Final).
 
 

@@ -148,7 +148,7 @@ action_for(11) :-
 action_for(12) :-
     write('Inserir o seu id: '), nl,
     read(Id),
-    update_entrega(Id).
+    update_estafeta(Id).
 
 action_for(13) :-
     write('Insira a encomenda a classificar: '),
@@ -168,5 +168,5 @@ action_for(14) :-
     write('|                             5. A*                                                       |'), nl,
     write('------------------------------------------------------------------------------------------'), nl,
     read(Flag),
-    calculaDistancias(Flag,Freguesias,Custos).
+    percorreEncomendas(Ids,Pesos,Prazos,Velocidades,Freguesias,Distancias,Flag,Freguesias,Custos).
     
