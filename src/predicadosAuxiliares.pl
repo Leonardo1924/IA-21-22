@@ -68,7 +68,7 @@ auxiliarData(ListaDatas) :-
 
 update_entrega([], []).
 update_entrega([Id|Ids], [S|Stars]) :-
-    retract(entrega(0, Id, S)),
+    retract(entrega(0, Id, _)),
     assert(entrega(1, Id, S)),
     update_entrega(Ids, Stars).
 
