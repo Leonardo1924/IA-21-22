@@ -19,13 +19,14 @@ dfs2(Act,Dest,LA,Cam,Custo):-
 
 
 
+
 bfs(Orig, Dest, Cam, Custo) :- bfs2(Orig, Dest,[[Orig]],Cam, Custo).
 
 bfs2(Dest,[[Dest|T]|],Cam, Custo):- reverse([Dest|T],Cam). %o caminho aparece pela ordem inversa
 bfs2(Dest,[LA|Outros],Cam, Custo):-
-    LA = [Act|],
+    LA = [Act|_],
     findall([X|LA],
-            (Dest==Act,adjacente(Act,X, Custo1),
+            (DEST\==Act,adjacente(Act,X, Custo1),
             \+ member(X,LA)),Novos),
     append(Outros,Novos,Todos),
     bfs2(Dest,Todos,Cam, Custo2),
