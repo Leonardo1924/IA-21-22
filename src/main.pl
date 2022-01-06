@@ -135,7 +135,7 @@ action_for(9) :-
 action_for(10) :-
     write('Insira o mes (2 digitos)'),
     read(M),
-    write('Insira o dia (2 digitos)'),
+    write('Insira o dia (2 digitos): '),
     read(D),
     peso_transportado((M,D), T),
     write(T), nl.
@@ -168,5 +168,5 @@ action_for(14) :-
     write('|                             5. A*                                                       |'), nl,
     write('------------------------------------------------------------------------------------------'), nl,
     read(Flag),
-    calculaDistancias(Flag,Freguesias,Custos)
+    calculaDistancias(Flag,Freguesias,Custos).
     
