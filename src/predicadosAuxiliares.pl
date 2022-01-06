@@ -66,9 +66,11 @@ auxiliarCliente(ListaClientes) :-
 auxiliarData(ListaDatas) :- 
 	findall(Data, encomenda(_, _, _, _, _, Data),ListaDatas).
 
-update_entrega(IdEnc) :-
-    retract(entrega(0, IdEnc, N)),
-    assert(entrega(1, IdEnc, N)).
+update_entrega([], []).
+update_entrega([Id|Ids], [S|Stars]) :-
+    retract(entrega(0, Id, S)),
+    assert(entrega(1, Id, S)),
+    update_entrega(Ids, Stars).
 
 update_estafeta(IdEstaf) :-
     retract(estafeta(IdEstaf, Nome, C, 'naobase')),
