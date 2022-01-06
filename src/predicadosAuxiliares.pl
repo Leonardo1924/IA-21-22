@@ -101,11 +101,11 @@ calculaStar([Id|Ids], [V|Velocidades], [D|Distancias], [S|Stars]) :-
     encomenda(Id, _, _, Prazo, _, _, _, _,),
     V > 0,
     Tempo is D / V,
-    Tempo < Prazo + 1 -> S is 5;
-    Tempo >= Prazo + 1, Tempo < Prazo + 3 -> S is 4;
-    Tempo >= Prazo + 3, Tempo < Prazo + 24 -> S is 3;
-    Tempo >= Prazo + 24, Tempo < Prazo + 48 -> S is 2;
-    Tempo >= Prazo + 48, Tempo < Prazo + 72 -> S is 1,
+    Tempo < Prazo + 2 -> S is 5;
+    Tempo >= Prazo + 2, Tempo < Prazo + 4 -> S is 4;
+    Tempo >= Prazo + 4, Tempo < Prazo + 25 -> S is 3;
+    Tempo >= Prazo + 25, Tempo < Prazo + 49 -> S is 2;
+    Tempo >= Prazo + 49 -> S is 1,
     calculaStar(Ids, Velocidades, Distancias, Stars).
     
 calculaVelocidade([], []).
