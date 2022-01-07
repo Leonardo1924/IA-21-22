@@ -72,6 +72,11 @@ update_entrega([Id|Ids], [S|Stars]) :-
     assert(entrega(1, Id, S)),
     update_entrega(Ids, Stars).
 
+update_Estentrega([Id|Ids]) :- 
+    retract(entrega(0, Id, _)),
+    assert(entrega(1, Id, _)),
+    update_entrega(Id).
+
 update_estafeta(IdEstaf) :-
     retract(estafeta(IdEstaf, Nome, C, 'naobase')),
     assert(estafeta(IdEstaf, Nome, C, 'base')),
@@ -98,7 +103,9 @@ percorreEncomendas(Ids,Pesos,Prazos,Velocidades,Freguesias,Distancias,Flag,Fregu
     findall(IdCliente, encomendaGerida(Id, _, _, _, _, IdCliente, _, IdEstaf ,_),entrega(0, Id,_),IdEstaf > 0, IdClientes),   
     procuraFreguesia(IdClientes,Freguesias),
     calculaVelocidade(Pesos, Velocidades),
-    calculaDistancias(Flag,Freguesias,Custos).
+    calculaDistancias(Flag,Freguesias,Custos),
+    calculaStar(Ids, Velocidades, Distancias, Result),
+    update_entrega(Ids,Result).
 
 calculaStar([], [], [], []).
 calculaStar([Id|Ids], [V|Velocidades], [D|Distancias], [S|Stars]) :-
@@ -126,13 +133,16 @@ procuraFreguesia([IdC|IdClientes], [F|Freguesias]) :-
 
 calculaDistancias(_, [], []).
 calculaDistancias('1',[F|Freguesias],[Custo|Custos]) :-
-    dfs('Maximinos',F,Cam,Custo),
+    dfs(maximinos,F,Cam,Custo),
     calculaDistancias('1',Freguesias, Custos).
 calculaDistancias('2',[F|Freguesias],[Custo|Custos]) :-
-     bfs('Maximinos',F,Cam,Custo),
+     bfs(maximinos,F,Cam,Custo),
      calculaDistancias('2',Freguesias, Custos).
 calculaDistancias('3',[F|Freguesias],[Custo|Custos]) :-
-    dfs('Maximinos',F,Cam,Custo),
-    calculaDistancias('1',Freguesias, Custos).
+    gulosa(maximinos,Cam,Custo),
+    calculaDistancias('3',Freguesias, Custos).
+calculaDistancias('4',[F|Freguesias],[Custo|Custos]) :-
+    resolve_aestrela(maximinos,F,Cam/Custo), 
+    calculaDistancias('4',Freguesias, Custos).
     
 

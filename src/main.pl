@@ -143,7 +143,7 @@ action_for(10) :-
 action_for(11) :-
     write('Inserir id de encomenda: '), nl,
     read(Id),
-    update_entrega(Id).
+    update_Estentrega(Id).
 
 action_for(12) :-
     write('Inserir o seu id: '), nl,
@@ -163,9 +163,8 @@ action_for(14) :-
     write('----------------------------------------Procuras------------------------------------------'), nl, 
     write('|                             1. DFs                                                      |'), nl,
     write('|                             2. BFs                                                      |'), nl,
-    write('|                             3. Busca Limitada em Profundidade                           |'), nl,
-    write('|                             4. Gulosa                                                   |'), nl,
-    write('|                             5. A*                                                       |'), nl,
+    write('|                             3. Gulosa                                                   |'), nl,
+    write('|                             4. A*                                                       |'), nl,
     write('------------------------------------------------------------------------------------------'), nl,
     read(Flag),
     percorreEncomendas(Ids,Pesos,Prazos,Velocidades,Freguesias,Distancias,Flag,Freguesias,Custos).

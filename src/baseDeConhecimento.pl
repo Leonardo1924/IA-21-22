@@ -36,48 +36,49 @@ estafeta(6, 'Paulo Marques' , 923432312,'base').
 estafeta(7, 'Antonio Soares', 964332124, 'naobase').
 
 %freguesias(FreguesiaInicial, FreguesiaFinal, Distancia)
-freguesias( grafo(['Adaufe','Maximinos','Sao Pedro','Palmeira','Real','Nogueira','Sao Vitor','Sao Lazaro','Ferreiros', 'Frossos', 'Gualtar','Nogueiro','Sao Vicente','Navarra'],
-    [aresta('Adaufe', 'Gualtar', 8),
-     aresta('Adaufe', 'Palmeira', 12),
-     aresta('Adaufe','Sao Vitor', 7),
-     aresta('Adaufe', 'Sao Vicente', 7),
-     aresta('Adaufe', 'Navarra', 10),
-     aresta('Maximinos', 'Sao Lazaro', 6),
-     aresta('Maximinos','Ferreiros', 7),
-     aresta('Maximinos', 'Real', 11),
-     aresta('Maximinos','Sao Vicente', 3),
-     aresta('Sao Pedro', 'Gualtar', 12),
-     aresta('Sao Pedro','Nogueiro', 10),
-     aresta('Sao Pedro','Navarra', 11),
-     aresta('Palmeira','Real', 14),
-     aresta('Palmeira','Frossos', 8),
-     aresta('Palmeira','Sao Vicente', 8),
-     aresta('Real','Sao Vicente', 10),
-     aresta('Real','Frossos', 13),
-     aresta('Real','Ferreiros', 9),
-     aresta('Nogueira','Sao Lazaro', 6),
-     aresta('Nogueira','Sao Vitor', 8),
-     aresta('Nogueira','Nogueiro', 6),
-     aresta('Sao Vitor','Gualtar', 7),
-     aresta('Sao Vitor','Sao Lazaro', 3),
-     aresta('Sao Vitor','Sao Vicente', 4),
-     aresta('Sao Vitor','Nogueiro', 8),
-     aresta('Sao Lazaro','Sao Vicente', 6),
-     aresta('Gualtar','Nogueiro', 4)])).
+freguesias( grafo([adaufe,maximinos,saoPedro,palmeira,real,nogueira,saoVitor,saoLazaro,ferreiros,frossos, gualtar,nogueiro,saoVicente,navarra],
+    [aresta(adaufe, gualtar, 8),
+    aresta(adaufe, palmeira, 12),
+    aresta(adaufe, saoVitor, 7),
+    aresta(saoVicente, adaufe, 7 ),
+    aresta(navarra, adaufe, 10 ),
+    aresta(saoLazaro, maximinos, 6),
+    aresta(ferreiros, maximinos, 7),
+    aresta(maximinos, real, 11),
+    aresta(maximinos, saoVicente, 3),
+    aresta(saoPedro, gualtar, 12),
+    aresta(nogueiro, saoPedro, 10),
+    aresta(saoPedro, navarra, 11),
+    aresta(palmeira, real, 14),
+    aresta(frossos, palmeira, 8),
+    aresta(palmeira, saoVicente, 8),
+    aresta(real, saoVicente, 8),
+    aresta(real, frossos, 13),
+    aresta(real, ferreiros,9),
+    aresta(saoLazaro, nogueira, 6),
+    aresta(nogueira, saoVitor, 8),
+    aresta(nogueira, nogueiro, 6),
+    aresta(saoVitor, gualtar, 7),
+    aresta(saoVitor, saoLazaro, 3),
+    aresta(saoVicente, saoVitor, 4),
+    aresta(saoVitor, nogueiro, 8),
+    aresta(saoLazar, saoVicente, 6),
+    aresta(gualtar, nogueiro, 4)])).
 
-% node(nodo, estimativaCusto).
+% estima(nodo, estimativaCusto).
 
-node('Maximinos', 0).
-node('Real', 11).
-node('Ferreiros', 7).
-node('Frossos', 19).
-node('Palmeira', 11).
-node('Sao Vicente', 3).
-node('Sao Lazaro', 6).
-node('Adaufe', 10).
-node('Sao Vitor', 7).
-node('Nogueira', 12).
-node('Nogueiro', 15).
-node('Gualtar', 14).
-node('Navarra', 20).
-node('Sao Pedro', 25).
+estima(adaufe,10).
+estima(maximinos, 0).
+estima(saoPedro, 26).
+estima(palmeira, 11).
+estima(real, 11). 
+estima(nogueira, 12).
+estima(saoVitor,7).
+estima(saoLazaro, 6).
+estima(gualtar,14).
+estima(ferreiros, 7).
+estima(frossos, 24).
+estima(saoVicente,3).
+estima(saoLazaro,6).
+estima(nogueiro,18).
+estima(navarra,21).
